@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One telemetry cell in the bottom bar: a tracked label over a tabular readout. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/label"
+        style="@style/Frame.Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/ink_muted_on_bars"
+        android:text="alt" />
+
+    <TextView
+        android:id="@+id/value"
+        style="@style/Frame.Readout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--" />
+</LinearLayout>

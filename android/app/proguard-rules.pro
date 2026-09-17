@@ -1,0 +1,12 @@
+# DJI MSDK v4 rules (from the DJI sample). Only used if minify is enabled.
+-keepattributes Exceptions,InnerClasses,*Annotation*,Signature,EnclosingMethod
+-dontoptimize
+-dontpreverify
+-dontwarn okio.**
+-dontwarn org.bouncycastle.**
+-keep class dji.** { *; }
+-keep class com.dji.** { *; }
+-keep class com.secneo.** { *; }
+-keep class org.bouncycastle.** { *; }
+-keep class org.java_websocket.** { *; }
+-keep class com.jonathanandrei.phantombridge.** { *; }

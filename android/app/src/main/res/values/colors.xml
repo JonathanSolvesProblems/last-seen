@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Phantom Bridge design code (see .design/manifest.json):
+  The picture is the scene; the UI is a letterbox frame around it and never on it.
+  The frame takes its hue from the live feed (lightness fixed); no accent colour.
+  The only fixed chroma is the e-stop: red on a yellow collar (ISO 13850).
+  STOP cuts the screen to black and white at 0 ms.
+
+  This file is the LIGHT ("sun") theme, for direct sunlight. values-night holds
+  the dark default.
+-->
+<resources>
+    <color name="bars">#0B0B0A</color>
+    <color name="frame">#CFD2CC</color>
+    <color name="gate_rim">#9EA29C</color>
+    <color name="ink">#121311</color>
+    <color name="ink_muted">#4E524E</color>
+    <color name="rule">#9EA29C</color>
+    <color name="ink_on_bars">#F1F0EA</color>
+    <color name="ink_muted_on_bars">#9C9E98</color>
+    <color name="estop_red">#D62828</color>
+    <color name="estop_collar">#F2C400</color>
+    <color name="estop_ink">#FFFFFF</color>
+    <color name="ripple">#33121311</color>
+</resources>

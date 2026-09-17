@@ -1,0 +1,79 @@
+﻿# One config drives both the simulator and the real mission.
+# Distances are metres in a local east/north frame anchored at field.origin
+# (normally the takeoff spot). For the real park, replace origin and give the
+# polygon as polygon_latlon (walk the corners with your phone's GPS).
+
+field:
+  origin: {lat: 45.5017, lon: -73.5673}     # placeholder; set to your takeoff point
+  polygon_enu: [[-60, -40], [60, -40], [60, 40], [-60, 40]]
+  home: [0, 0]
+
+fence:
+  max_radius_m: 120        # hard radius from home, on top of the polygon
+  max_alt_m: 50
+  floor_alt_m: 15          # never lower than this away from home (no obstacle sensing!)
+  home_radius_m: 8
+  margin_m: 5
+
+altitudes:
+  survey: 30               # nadir mapping pass
+  search: 22               # coverage search
+  follow: 15               # standoff follow
+  rth: 35
+
+survey:
+  enabled: true
+  overlap: 0.3
+  speed: 5
+  cell_m: 1.0
+  safety_m: 3.0
+  map_path: null           # set to runs/<run>/map to reuse a saved map
+
+search:
+  spacing_m: 25
+  gimbal_pitch: -60
+  speed: 4
+  max_time_s: 300
+
+follow:
+  standoff_m: 12
+  speed: 4
+  duration_s: 60
+  lost_timeout_s: 8
+
+perception:
+  detector: oracle         # oracle (sim) | yolo (real; ONNX runtime when weights end in .onnx)
+  matcher: oracle          # oracle (sim) | color | claude
+  reference_photo: null    # e.g. data/reference.jpg for color/claude
+  yolo_weights: models/yolo11n.onnx
+  yolo_imgsz: 960
+  yolo_conf: 0.25
+  match_threshold: 0.6
+  confirm_frames: 3
+  lose_frames: 15
+
+sim:
+  random_trees: 10
+  seed: 7
+  frame_w: 960
+  frame_h: 540
+  gps_noise_m: 0.6
+  video_latency_s: 0.25
+  wind_en: [0.3, -0.2]
+  people:
+    - id: target
+      start: [35, 12]
+      path: [[35, 12], [-30, 25], [-40, -20], [20, -28], [35, 12]]
+      speed: 1.3
+      shirt_bgr: [30, 30, 230]       # red shirt
+      pause_s: 3
+    - id: decoy
+      start: [-45, 30]
+      path: [[-45, 30], [45, -30]]
+      speed: 1.0
+      shirt_bgr: [230, 120, 30]      # blue shirt
+
+bridge_url: ws://127.0.0.1:8765
+runs_dir: runs
+loop_hz: 10
+max_mission_s: 900

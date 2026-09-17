@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PhantomBridge" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/bars</item>
+        <item name="android:textColor">@color/ink</item>
+        <item name="android:fontFamily">@font/anybody</item>
+        <item name="colorPrimary">@color/ink</item>
+        <item name="colorAccent">@color/ink</item>
+        <item name="android:colorControlHighlight">@color/ripple</item>
+        <item name="android:statusBarColor">@color/bars</item>
+        <item name="android:navigationBarColor">@color/bars</item>
+    </style>
+
+    <!-- Type: one family (Anybody), voice set by width and weight. Scale 1.25 from 14sp. -->
+    <style name="Frame.Text" parent="">
+        <item name="android:fontFamily">@font/anybody</item>
+        <item name="android:textColor">@color/ink</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <!-- 11sp tracked caps: labels over readouts, node names -->
+    <style name="Frame.Label" parent="Frame.Text">
+        <item name="android:textSize">11sp</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/ink_muted</item>
+        <item name="android:tag">\'wdth\' 100, \'wght\' 600</item>
+    </style>
+
+    <!-- 14sp body: log lines, hints -->
+    <style name="Frame.Body" parent="Frame.Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:tag">\'wdth\' 100, \'wght\' 450</item>
+        <item name="android:lineSpacingMultiplier">1.15</item>
+    </style>
+
+    <!-- 28sp narrow heavy tabular readouts -->
+    <style name="Frame.Readout" parent="Frame.Text">
+        <item name="android:textSize">28sp</item>
+        <item name="android:tag">\'wdth\' 70, \'wght\' 700</item>
+        <item name="android:fontFeatureSettings">tnum</item>
+        <item name="android:textColor">@color/ink_on_bars</item>
+    </style>
+
+    <!-- 15sp step rows in the side margins -->
+    <style name="Frame.Step" parent="Frame.Text">
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:tag">\'wdth\' 78, \'wght\' 650</item>
+    </style>
+
+    <!-- the step number sits in a square that fills when the step is done -->
+    <style name="Frame.StepNumber" parent="Frame.Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:tag">\'wdth\' 70, \'wght\' 800</item>
+        <item name="android:fontFeatureSettings">tnum</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/mark_off</item>
+    </style>
+
+    <!-- small state marks: ON / OFF, DONE -->
+    <style name="Frame.Mark" parent="Frame.Text">
+        <item name="android:textSize">11sp</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:tag">\'wdth\' 90, \'wght\' 700</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>

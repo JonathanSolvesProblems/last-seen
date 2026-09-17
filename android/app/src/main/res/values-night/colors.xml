@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dark default: unexposed log grey frame, projector-white ink. -->
+<resources>
+    <color name="bars">#0B0B0A</color>
+    <color name="frame">#4A4E4B</color>
+    <color name="gate_rim">#2A2D2B</color>
+    <color name="ink">#F1F0EA</color>
+    <color name="ink_muted">#B9BCB6</color>
+    <color name="rule">#6A6E6A</color>
+    <color name="ink_on_bars">#F1F0EA</color>
+    <color name="ink_muted_on_bars">#9C9E98</color>
+    <color name="estop_red">#D62828</color>
+    <color name="estop_collar">#F2C400</color>
+    <color name="estop_ink">#FFFFFF</color>
+    <color name="ripple">#33F1F0EA</color>
+</resources>

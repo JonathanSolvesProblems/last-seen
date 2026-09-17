@@ -1,0 +1,6 @@
+# Copy to local.properties (never commit it).
+sdk.dir=C\:\\Users\\Jon_A\\AppData\\Local\\Android\\Sdk
+# From https://developer.dji.com -> Apps -> Create App
+#   SDK type:     Mobile SDK
+#   Package name: com.jonathanandrei.phantombridge   (must match exactly)
+DJI_API_KEY=paste_your_app_key_here
