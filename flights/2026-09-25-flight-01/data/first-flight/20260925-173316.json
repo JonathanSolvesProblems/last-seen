@@ -1,0 +1,18 @@
+{
+  "when": "2026-09-25 17:33:42",
+  "aborted": "pilot took control (virtual stick ended)",
+  "steps": [
+    {
+      "name": "preflight",
+      "ok": true,
+      "detail": "clear",
+      "data": {
+        "sats": 12,
+        "battery": 64,
+        "switch": "F",
+        "home_set": true,
+        "mode": "F-GPS"
+      }
+    }
+  ]
+}

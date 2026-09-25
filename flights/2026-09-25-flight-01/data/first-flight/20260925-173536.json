@@ -1,0 +1,43 @@
+{
+  "when": "2026-09-25 17:36:29",
+  "aborted": "pilot took control (virtual stick ended)",
+  "steps": [
+    {
+      "name": "preflight",
+      "ok": true,
+      "detail": "clear",
+      "data": {
+        "sats": 12,
+        "battery": 62,
+        "switch": "F",
+        "home_set": true,
+        "mode": "F-GPS"
+      }
+    },
+    {
+      "name": "takeoff",
+      "ok": true,
+      "detail": "hovering at 2.0 m",
+      "data": {}
+    },
+    {
+      "name": "climb",
+      "ok": true,
+      "detail": "reached 3.9 m of 4 m",
+      "data": {
+        "alt": 3.9
+      }
+    },
+    {
+      "name": "axis north",
+      "ok": true,
+      "detail": "moved N+3.5 E+0.0 m, heading +1 deg",
+      "data": {
+        "dn": 3.5,
+        "de": 0.02,
+        "dheading": 0.6,
+        "expect": "north"
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "when": "2026-09-25 17:41:55",
+  "aborted": null,
+  "steps": [
+    {
+      "name": "preflight",
+      "ok": true,
+      "detail": "clear",
+      "data": {
+        "sats": 12,
+        "battery": 52,
+        "switch": "F",
+        "home_set": true,
+        "mode": "F-GPS"
+      }
+    },
+    {
+      "name": "takeoff",
+      "ok": true,
+      "detail": "hovering at 2.2 m",
+      "data": {}
+    },
+    {
+      "name": "climb",
+      "ok": true,
+      "detail": "reached 3.9 m of 4 m",
+      "data": {
+        "alt": 3.9
+      }
+    },
+    {
+      "name": "axis yaw cw",
+      "ok": true,
+      "detail": "moved N-0.3 E-0.4 m, heading +91 deg",
+      "data": {
+        "dn": -0.3,
+        "de": -0.39,
+        "dheading": 90.6,
+        "expect": "clockwise"
+      }
+    },
+    {
+      "name": "vertical",
+      "ok": true,
+      "detail": "climbed +1.6 m on +vu",
+      "data": {
+        "dalt": 1.6
+      }
+    }
+  ]
+}

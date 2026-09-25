@@ -1,0 +1,18 @@
+{
+  "when": "2026-09-25 17:22:50",
+  "aborted": null,
+  "steps": [
+    {
+      "name": "preflight",
+      "ok": false,
+      "detail": "RC mode switch is P, must be F",
+      "data": {
+        "sats": 10,
+        "battery": 67,
+        "switch": "P",
+        "home_set": true,
+        "mode": "P-GPS"
+      }
+    }
+  ]
+}

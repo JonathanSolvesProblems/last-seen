@@ -1,0 +1,18 @@
+{
+  "when": "2026-09-25 17:40:21",
+  "aborted": "takeoff did not lift the aircraft (alt 0.00 m, flying=False); wait for the motors to spin down and retry",
+  "steps": [
+    {
+      "name": "preflight",
+      "ok": true,
+      "detail": "clear",
+      "data": {
+        "sats": 11,
+        "battery": 53,
+        "switch": "F",
+        "home_set": true,
+        "mode": "F-GPS"
+      }
+    }
+  ]
+}

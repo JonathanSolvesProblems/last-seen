@@ -1,0 +1,18 @@
+{
+  "when": "2026-09-25 17:32:54",
+  "aborted": "bridge: enable_vs failed: The aircraft is taking off",
+  "steps": [
+    {
+      "name": "preflight",
+      "ok": true,
+      "detail": "clear",
+      "data": {
+        "sats": 11,
+        "battery": 65,
+        "switch": "F",
+        "home_set": true,
+        "mode": "F-GPS"
+      }
+    }
+  ]
+}
