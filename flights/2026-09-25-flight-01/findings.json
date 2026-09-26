@@ -1,0 +1,217 @@
+{
+  "date": "2026-09-25",
+  "location": "park, uncontrolled airspace",
+  "aircraft": "DJI Phantom 3 Standard",
+  "attempts_total": 9,
+  "attempts_airborne": 4,
+  "attempts_completed": 1,
+  "pilot_takeovers": 3,
+  "battery_start_pct": 65,
+  "battery_end_pct": 50,
+  "max_altitude_m": 5.7,
+  "telemetry_samples": 966,
+  "north_legs": 2,
+  "north_dn_m": [
+    3.5,
+    3.02
+  ],
+  "north_de_m": [
+    0.02,
+    0.15
+  ],
+  "attempts": [
+    {
+      "run": "20260925-172249",
+      "when": "2026-09-25 17:22:50",
+      "aborted": null,
+      "steps_ok": 0,
+      "steps_failed": 1,
+      "reached_air": false,
+      "max_alt": 0.0,
+      "samples": 0,
+      "battery_start": null,
+      "battery_end": null
+    },
+    {
+      "run": "20260925-172550",
+      "when": "2026-09-25 17:27:50",
+      "aborted": "preflight: RC mode switch is P, must be F",
+      "steps_ok": 0,
+      "steps_failed": 1,
+      "reached_air": false,
+      "max_alt": 0.0,
+      "samples": 0,
+      "battery_start": null,
+      "battery_end": null
+    },
+    {
+      "run": "20260925-173000",
+      "when": "2026-09-25 17:32:01",
+      "aborted": "preflight: RC mode switch is P, must be F",
+      "steps_ok": 0,
+      "steps_failed": 1,
+      "reached_air": false,
+      "max_alt": 0.0,
+      "samples": 0,
+      "battery_start": null,
+      "battery_end": null
+    },
+    {
+      "run": "20260925-173214",
+      "when": "2026-09-25 17:32:54",
+      "aborted": "bridge: enable_vs failed: The aircraft is taking off",
+      "steps_ok": 1,
+      "steps_failed": 0,
+      "reached_air": true,
+      "max_alt": 1.5,
+      "samples": 60,
+      "battery_start": 65,
+      "battery_end": 65
+    },
+    {
+      "run": "20260925-173316",
+      "when": "2026-09-25 17:33:42",
+      "aborted": "pilot took control (virtual stick ended)",
+      "steps_ok": 1,
+      "steps_failed": 0,
+      "reached_air": false,
+      "max_alt": 0.1,
+      "samples": 49,
+      "battery_start": 64,
+      "battery_end": 64
+    },
+    {
+      "run": "20260925-173536",
+      "when": "2026-09-25 17:36:29",
+      "aborted": "pilot took control (virtual stick ended)",
+      "steps_ok": 4,
+      "steps_failed": 0,
+      "reached_air": true,
+      "max_alt": 4,
+      "samples": 228,
+      "battery_start": 62,
+      "battery_end": 61
+    },
+    {
+      "run": "20260925-173837",
+      "when": "2026-09-25 17:39:10",
+      "aborted": "pilot took control (virtual stick ended)",
+      "steps_ok": 4,
+      "steps_failed": 0,
+      "reached_air": true,
+      "max_alt": 4,
+      "samples": 235,
+      "battery_start": 56,
+      "battery_end": 55
+    },
+    {
+      "run": "20260925-173955",
+      "when": "2026-09-25 17:40:21",
+      "aborted": "takeoff did not lift the aircraft (alt 0.00 m, flying=False); wait for the motors to spin down and retry",
+      "steps_ok": 1,
+      "steps_failed": 0,
+      "reached_air": false,
+      "max_alt": 0,
+      "samples": 49,
+      "battery_start": 53,
+      "battery_end": 52
+    },
+    {
+      "run": "20260925-174101",
+      "when": "2026-09-25 17:41:55",
+      "aborted": null,
+      "steps_ok": 5,
+      "steps_failed": 0,
+      "reached_air": true,
+      "max_alt": 5.7,
+      "samples": 345,
+      "battery_start": 52,
+      "battery_end": 50
+    }
+  ],
+  "axis_checks": [
+    {
+      "run": "20260925-173536",
+      "check": "climb",
+      "ok": true,
+      "detail": "reached 3.9 m of 4 m",
+      "alt": 3.9
+    },
+    {
+      "run": "20260925-173536",
+      "check": "axis north",
+      "ok": true,
+      "detail": "moved N+3.5 E+0.0 m, heading +1 deg",
+      "dn": 3.5,
+      "de": 0.02,
+      "dheading": 0.6,
+      "expect": "north"
+    },
+    {
+      "run": "20260925-173837",
+      "check": "climb",
+      "ok": true,
+      "detail": "reached 3.9 m of 4 m",
+      "alt": 3.9
+    },
+    {
+      "run": "20260925-173837",
+      "check": "axis north",
+      "ok": true,
+      "detail": "moved N+3.0 E+0.2 m, heading -1 deg",
+      "dn": 3.02,
+      "de": 0.15,
+      "dheading": -0.8,
+      "expect": "north"
+    },
+    {
+      "run": "20260925-174101",
+      "check": "climb",
+      "ok": true,
+      "detail": "reached 3.9 m of 4 m",
+      "alt": 3.9
+    },
+    {
+      "run": "20260925-174101",
+      "check": "axis yaw cw",
+      "ok": true,
+      "detail": "moved N-0.3 E-0.4 m, heading +91 deg",
+      "dn": -0.3,
+      "de": -0.39,
+      "dheading": 90.6,
+      "expect": "clockwise"
+    },
+    {
+      "run": "20260925-174101",
+      "check": "vertical",
+      "ok": true,
+      "detail": "climbed +1.6 m on +vu",
+      "dalt": 1.6
+    }
+  ],
+  "follow": [
+    {
+      "run": "20260925-174331",
+      "frames": 148,
+      "frames_with_person": 0,
+      "detection_rate_pct": 0.0,
+      "mean_abs_offset": null,
+      "mean_confidence": null
+    },
+    {
+      "run": "20260925-174524",
+      "frames": 83,
+      "frames_with_person": 83,
+      "detection_rate_pct": 100.0,
+      "mean_abs_offset": 0.0564,
+      "mean_confidence": 0.718
+    }
+  ],
+  "control": {
+    "samples_with_position": 309,
+    "max_radius_m": 1.01,
+    "final_radius_m": 0.57,
+    "max_alt_m": 5.7,
+    "note": "radius includes commanded motion, so it is an upper bound not a drift figure"
+  }
+}

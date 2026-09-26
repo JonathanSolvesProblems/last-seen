@@ -1,0 +1,83 @@
+# A scenario for exercising follow_me.py without a park.
+#
+# sim_field.yaml starts the target 37 m from home, which is correct for the full
+# mission (it has a search phase that goes and finds them) and useless for
+# testing the follower on its own: the person is never in frame, so the control
+# law is never entered.
+#
+# Here the target starts directly in front of the aircraft at roughly the
+# distance the gimbal is pointed at, then walks a slow loop that crosses the
+# fence line, so the leash gets exercised too. No trees, because a collision
+# would end the run before the interesting part.
+#
+#   python scripts/run_sim.py configs/sim_follow.yaml --speed 1 --port 8799
+#   python scripts/follow_me.py --url ws://127.0.0.1:8799 --detector oracle \
+#       --stage follow --alt 12 --standoff 10 --min-standoff 6 --hold 60 \
+#       --speed 3 --max-radius 60 --max-alt 25
+
+field:
+  origin: {lat: 45.5017, lon: -73.5673}
+  polygon_enu: [[-80, -80], [80, -80], [80, 80], [-80, 80]]
+  home: [0, 0]
+
+fence:
+  max_radius_m: 120
+  max_alt_m: 50
+  floor_alt_m: 5
+  home_radius_m: 8
+  margin_m: 5
+
+altitudes:
+  survey: 30
+  search: 22
+  follow: 12
+  rth: 35
+
+survey: {enabled: false, overlap: 0.3, speed: 5, cell_m: 1.0, safety_m: 3.0, map_path: null}
+search: {spacing_m: 25, gimbal_pitch: -60, speed: 4, max_time_s: 300}
+follow: {standoff_m: 10, speed: 3, duration_s: 60, lost_timeout_s: 8}
+
+perception:
+  detector: oracle
+  matcher: oracle
+  reference_photo: null
+  yolo_weights: models/yolo11n.onnx
+  yolo_imgsz: 960
+  yolo_conf: 0.25
+  match_threshold: 0.6
+  confirm_frames: 3
+  lose_frames: 15
+
+sim:
+  random_trees: 0
+  seed: 11
+  frame_w: 960
+  frame_h: 540
+  gps_noise_m: 0.6
+  video_latency_s: 0.25
+  wind_en: [0.2, -0.1]
+  people:
+    # Straight ahead (north) at the distance a -44 deg gimbal from 12 m looks at,
+    # so the follower has a target from the first frame.
+    # A slow loop a person would actually walk during a follow test: stays
+    # within about 20 m of the takeoff point and never sprints out of frame.
+    # The aircraft holds position when it loses the target (it has no search
+    # behaviour on purpose), so a target that leaves never comes back, and a
+    # scenario where that happens measures the scenario rather than the code.
+    - id: target
+      start: [0, 12]
+      path: [[0, 12], [10, 18], [2, 26], [-10, 18], [0, 12]]
+      speed: 1.0
+      shirt_bgr: [30, 30, 230]
+      pause_s: 2
+    # A second person who crosses the scene, to prove the lock does not jump.
+    - id: decoy
+      start: [-30, 40]
+      path: [[-30, 40], [30, 40], [-30, 40]]
+      speed: 1.6
+      shirt_bgr: [230, 120, 30]
+
+bridge_url: ws://127.0.0.1:8765
+runs_dir: runs
+loop_hz: 10
+max_mission_s: 900
