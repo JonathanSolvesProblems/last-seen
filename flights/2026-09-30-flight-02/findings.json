@@ -1,0 +1,95 @@
+{
+  "flight": "2026-09-30-flight-02",
+  "attempts_total": 3,
+  "attempts_airborne": 2,
+  "attempts_completed": 1,
+  "pilot_takeovers": 0,
+  "battery_start_pct": 88,
+  "battery_end_pct": 67,
+  "max_altitude_m": 6.4,
+  "telemetry_samples": 1028,
+  "frames_saved": 0,
+  "attempts": [
+    {
+      "run": "20260930-151000",
+      "when": "2026-09-30 15:11:22",
+      "aborted": "takeoff did not lift the aircraft after 3 attempts (alt 0.00 m)",
+      "reached_air": false,
+      "max_alt": 0,
+      "samples": 120,
+      "battery_start": 88,
+      "battery_end": 88,
+      "frames_saved": 0
+    },
+    {
+      "run": "20260930-153045",
+      "when": "2026-09-30 15:32:30",
+      "aborted": null,
+      "reached_air": true,
+      "max_alt": 6.4,
+      "samples": 649,
+      "battery_start": 82,
+      "battery_end": 75,
+      "frames_saved": 0
+    },
+    {
+      "run": "20260930-153512",
+      "when": "2026-09-30 15:35:56",
+      "aborted": "battery 0%",
+      "reached_air": true,
+      "max_alt": 6.2,
+      "samples": 259,
+      "battery_start": 69,
+      "battery_end": 67,
+      "frames_saved": 0
+    }
+  ],
+  "axis_checks": [
+    {
+      "run": "20260930-153045",
+      "check": "follow",
+      "ok": false,
+      "detail": "3/415 frames locked, 0 guard interventions",
+      "stage": "watch",
+      "frames": 415,
+      "locked": 3,
+      "guard_fires": 0,
+      "mean_range": null,
+      "min_range": null
+    }
+  ],
+  "perception": [
+    {
+      "run": "20260930-153045-perception",
+      "kind": "follow-me",
+      "frames": 415,
+      "stage": "watch",
+      "altitude_m": 6.0,
+      "frames_with_person": 3,
+      "detection_rate_pct": 0.7,
+      "locked_pct": 0.7,
+      "mean_confidence": 0.436,
+      "mean_abs_offset": null,
+      "range_mean_m": null,
+      "range_min_m": null,
+      "guard_fires": 0,
+      "flew_on_stale_fix": 0
+    },
+    {
+      "run": "20260930-153511-perception",
+      "kind": "follow-me",
+      "frames": 185,
+      "stage": "find",
+      "altitude_m": 6.0,
+      "frames_with_person": 185,
+      "detection_rate_pct": 100.0,
+      "locked_pct": 100.0,
+      "mean_confidence": 0.779,
+      "mean_abs_offset": null,
+      "range_mean_m": 15.27,
+      "range_min_m": 12.87,
+      "guard_fires": 0,
+      "flew_on_stale_fix": 0
+    }
+  ]
+}

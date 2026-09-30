@@ -1,0 +1,38 @@
+{
+  "when": "2026-09-30 15:35:56",
+  "name": "follow-me",
+  "aborted": "battery 0%",
+  "frames_saved": 0,
+  "envelope": {
+    "max_alt": 10.0,
+    "max_radius": 12.0,
+    "min_battery": 25,
+    "min_sats": 7,
+    "stale_s": 2.0,
+    "max_speed": 1.0,
+    "max_climb": 0.5,
+    "max_yaw_rate": 25.0
+  },
+  "steps": [
+    {
+      "name": "preflight",
+      "detail": "clear",
+      "ok": true,
+      "data": {
+        "sats": 9,
+        "battery": 69,
+        "switch": "F",
+        "home_set": true,
+        "mode": "F-GPS"
+      }
+    },
+    {
+      "name": "takeoff",
+      "detail": "hovering at 4.0 m",
+      "ok": true,
+      "data": {
+        "alt": 4
+      }
+    }
+  ]
+}
