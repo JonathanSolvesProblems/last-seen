@@ -1,0 +1,10 @@
+{
+  "_note": "PLACEHOLDER square. Replace every number with the tape-measured centre-to-centre distances on the day, in metres east and north of marker 20.",
+  "size_m": 0.19,
+  "centres_m": {
+    "20": [0.0, 0.0],
+    "21": [2.0, 0.0],
+    "22": [2.0, 2.0],
+    "23": [0.0, 2.0]
+  }
+}
