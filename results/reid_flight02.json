@@ -1,0 +1,87 @@
+{
+  "source": "flight 02 onboard clip, 2026-09-30, 6 m altitude, 2704x1520, sampled every 2 s",
+  "detector": "YOLO11n, OpenCV 5 DNN, conf 0.35",
+  "crops": 232,
+  "impostors": [
+    [
+      0.0,
+      0
+    ],
+    [
+      2.0,
+      1
+    ],
+    [
+      4.0,
+      1
+    ],
+    [
+      12.0,
+      1
+    ],
+    [
+      16.0,
+      1
+    ],
+    [
+      42.0,
+      1
+    ],
+    [
+      354.0,
+      1
+    ],
+    [
+      356.0,
+      1
+    ]
+  ],
+  "labels": "checked by eye on reid_flight02_sheet.jpg (impostors framed red)",
+  "matcher": "ReIdMatcher: OpenCV zoo person_reid_youtu_2021nov (cosine) 0.7 + HSV clothing bands 0.3",
+  "thresholds": {
+    "ask": 0.6,
+    "look": 0.3
+  },
+  "limitation": "reference is a crop from the same flight, not a ground-level photo",
+  "runs": [
+    {
+      "reference_t": 8.0,
+      "me_n": 223,
+      "impostors_n": 8,
+      "me_min": 0.299,
+      "me_p05": 0.763,
+      "me_median": 0.934,
+      "impostors_max": 0.181,
+      "impostors_median": 0.148,
+      "me_at_or_above_ask": 216,
+      "impostors_at_or_above_look": 0,
+      "separable": true
+    },
+    {
+      "reference_t": 150.0,
+      "me_n": 223,
+      "impostors_n": 8,
+      "me_min": 0.305,
+      "me_p05": 0.793,
+      "me_median": 0.944,
+      "impostors_max": 0.201,
+      "impostors_median": 0.159,
+      "me_at_or_above_ask": 217,
+      "impostors_at_or_above_look": 0,
+      "separable": true
+    },
+    {
+      "reference_t": 300.0,
+      "me_n": 223,
+      "impostors_n": 8,
+      "me_min": 0.296,
+      "me_p05": 0.762,
+      "me_median": 0.956,
+      "impostors_max": 0.219,
+      "impostors_median": 0.13,
+      "me_at_or_above_ask": 215,
+      "impostors_at_or_above_look": 0,
+      "separable": true
+    }
+  ]
+}

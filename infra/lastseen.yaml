@@ -1,0 +1,136 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  Last Seen mission control. A Lambda behind a function URL serves the
+  coordinator's page and the JSON API the field laptop posts to; DynamoDB holds
+  each mission (one item per mission, the decision is a conditional write);
+  S3 holds crops and the reference photo privately and expires them. Nothing
+  here flies the aircraft: safety never waits on a cloud round trip.
+
+Parameters:
+  Prefix:
+    Type: String
+    Default: lastseen
+  CodeKey:
+    Type: String
+    Description: S3 key of the Lambda zip inside the artifacts bucket (changes on every deploy)
+  ArtifactsBucket:
+    Type: String
+  Token:
+    Type: String
+    NoEcho: true
+    MinLength: 16
+  RetentionDays:
+    Type: Number
+    Default: 30
+
+Resources:
+  Media:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault: {SSEAlgorithm: AES256}
+      LifecycleConfiguration:
+        Rules:
+          - Id: expire-crops
+            Status: Enabled
+            Prefix: crops/
+            ExpirationInDays: !Ref RetentionDays
+      Tags: [{Key: project, Value: !Ref Prefix}]
+
+  Missions:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions: [{AttributeName: id, AttributeType: S}]
+      KeySchema: [{AttributeName: id, KeyType: HASH}]
+      SSESpecification: {SSEEnabled: true}
+      Tags: [{Key: project, Value: !Ref Prefix}]
+
+  Logs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${Prefix}-mission-control
+      RetentionInDays: 14
+
+  Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: {Service: lambda.amazonaws.com}
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: least-privilege
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: [dynamodb:GetItem, dynamodb:PutItem, dynamodb:UpdateItem, dynamodb:Scan]
+                Resource: !GetAtt Missions.Arn
+              - Effect: Allow
+                Action: [s3:PutObject, s3:GetObject]
+                Resource: !Sub ${Media.Arn}/*
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub ${Logs.Arn}:*
+      Tags: [{Key: project, Value: !Ref Prefix}]
+
+  Fn:
+    Type: AWS::Lambda::Function
+    DependsOn: Logs
+    Properties:
+      FunctionName: !Sub ${Prefix}-mission-control
+      Runtime: python3.13
+      Architectures: [arm64]
+      Handler: mission_control.lambda_handler.handler
+      MemorySize: 256
+      Timeout: 10
+      Role: !GetAtt Role.Arn
+      Code: {S3Bucket: !Ref ArtifactsBucket, S3Key: !Ref CodeKey}
+      Environment:
+        Variables:
+          TABLE: !Ref Missions
+          BUCKET: !Ref Media
+          TOKEN: !Ref Token
+      Tags: [{Key: project, Value: !Ref Prefix}]
+
+  Url:
+    Type: AWS::Lambda::Url
+    Properties:
+      TargetFunctionArn: !GetAtt Fn.Arn
+      AuthType: NONE        # the App checks its own bearer token on every route
+
+  UrlPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref Fn
+      Action: lambda:InvokeFunctionUrl
+      Principal: "*"
+      FunctionUrlAuthType: NONE
+
+  # Since October 2025 a public function URL also needs lambda:InvokeFunction.
+  # InvokedViaFunctionUrl keeps it to URL calls only, so the function cannot be
+  # invoked any other way by anyone who learns its name.
+  UrlInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref Fn
+      Action: lambda:InvokeFunction
+      Principal: "*"
+      InvokedViaFunctionUrl: true
+
+Outputs:
+  Url:
+    Value: !GetAtt Url.FunctionUrl
+  Table:
+    Value: !Ref Missions
+  Bucket:
+    Value: !Ref Media

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Redrawn for 16 px, not shrunk: a chalk trunk on field green, the tape on a clear
+       diagonal (a level band read as a first-aid cross), one tail. -->
+  <rect width="32" height="32" rx="7" fill="#1c2a18"/>
+  <rect x="12.5" y="3.5" width="7" height="25" rx="1.6" fill="#eef1e6"/>
+  <path d="M5 16.5 L27 9.5 L28.6 14.6 L6.6 21.6 Z" fill="#d42a5f"/>
+  <path d="M20.2 16.9 L23 16 L24.2 26.4 L21.6 26.8 Z" fill="#ff6b96"/>
+</svg>

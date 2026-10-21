@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Last Seen</title>
+<meta name="description" content="A drone searches a field for someone from a photo, and asks you before it follows anyone.">
+<link rel="icon" href="{{icon}}">
+<meta name="theme-color" content="#111A10" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#E9EFE2" media="(prefers-color-scheme: light)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;800&family=Red+Hat+Text:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+/* Last Seen: design code (full laws in .design/brand/CHARTER.md)
+   Avoided: the tactical GIS console every search and drone tool ships (slate map, neon
+   overlays, icon rail, monospace HUD). This is read by a volunteer in a field, not a pilot.
+   Metaphor: flagging tape on the field. A searcher ties pink ribbon to what the next person
+   must notice and writes who and when on it in marker; a search is planned in rings out
+   from the point last seen.
+   - Tape pink marks only what a person must act on or decided, because flagging tape is
+     pink so green cannot hide it.
+   - Marker capitals appear only on tape and only say who or when, because that is what a
+     ribbon carries.
+   - Space is rings from the point last seen, never a grid, because that is how a search
+     is planned.
+   - The ground is field green, because the screen is held up against the field. */
+
+:root {
+  color-scheme: light dark;
+  --ground: #E9EFE2; --raised: #F5F8F0; --ink: #141A12; --ink-2: #4A5642; --line: #C9D3BE;
+  --ring: #A9B79D; --tape: #C21F53; --tape-ink: #FFF8FA; --orange: #CD892B; --orange-ink: #8F560F;
+  --navy: #2A2D47; --grass: #718D5A; --chalk: #141A12; --shadow: 0 1px 1px rgba(20,34,12,.06), 0 10px 30px -8px rgba(30,52,18,.28);
+  --r: 10px; --r-in: 6px; --print: #F8FAF4; --field: #CBD9BD; --field-2: #C7D6B9; --paint: #F7FAF1; --live: #3E7A2E;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground: #111A10; --raised: #1A2618; --ink: #EEF1E6; --ink-2: #A9B59F; --line: #2C3A28;
+          --ring: #33452E; --tape: #FF4D86; --tape-ink: #2A0712; --orange: #E6A04A; --orange-ink: #E6A04A;
+          --navy: #A3ADD8; --chalk: #EEF1E6; --print: #E3E8DA; --field: #1A2817; --field-2: #192716; --paint: #50694A; --live: #8BC273; --shadow: 0 0 0 1px #2C3A28, 0 14px 34px -10px rgba(0,0,0,.6); }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background-color: var(--ground); color: var(--ink); background-image: var(--grain);
+       font: 400 17px/1.5 "Red Hat Text", system-ui, sans-serif; font-feature-settings: "tnum" 1; }
+/* The ground: field grain, never on text. */
+:root { --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .27  0 0 0 0 .4  0 0 0 0 .2  0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"); }
+::selection { background: var(--tape); color: var(--tape-ink); }
+:focus-visible { outline: 3px solid var(--tape); outline-offset: 3px; border-radius: 4px; }
+.wrap { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+header { display: flex; align-items: center; gap: 20px; padding: 18px 0 8px; }
+/* Readings: what an instrument says (times, distances, scores, altitude). */
+.rd { font-weight: 700; font-variant-numeric: tabular-nums; }
+.wordmark { height: clamp(32px, 9vw, 40px); width: auto; display: block; }
+.wordmark svg { height: 100%; width: auto; fill: var(--ink); display: block; }
+.heard { margin-left: auto; color: var(--ink-2); font-size: 14px; display: flex; align-items: center; gap: 7px; }
+.heard.is-live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--live); }
+@media (prefers-reduced-motion: no-preference) { .heard.is-live::before { animation: beat 2s ease-in-out infinite; } }
+@keyframes beat { 50% { opacity: .35; } }
+/* The aircraft strip: the one control over the aircraft, in one place and one colour in
+   both themes, because an order to the drone must never move or change. */
+.aircraft { position: sticky; bottom: 0; z-index: 5; display: flex; align-items: center; gap: 14px;
+            margin: 0 -16px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+            background: #2A2D47; color: #EEF1E6; box-shadow: 0 -1px 0 #1E2035; }
+@media (min-width: 900px) { .aircraft { position: static; margin: 0; border-radius: var(--r); padding: 12px 16px; } }
+.status { display: flex; gap: 6px 18px; flex-wrap: wrap; font-size: 15px; color: #C3C8E2; }
+.status b { color: #EEF1E6; font-size: 17px; }
+.recall { margin-left: auto; flex: 0 0 auto; background: #EEF1E6; color: #2A2D47; font-size: 17px; min-height: 50px; padding: 0 20px; }
+.recall:hover { background: #FFFFFA; }
+.aircraft[hidden] { display: none; }
+
+/* Phone: what to do, then where, then who. Desktop: the map owns the right half at full
+   height, the decision and the people seen share the left. */
+main { display: grid; gap: 22px; padding: 8px 0 24px; grid-template-areas: "scene" "where" "who" "craft"; }
+#scene { grid-area: scene; } #where { grid-area: where; } #who { grid-area: who; } #aircraft { grid-area: craft; }
+@media (min-width: 900px) {
+  main { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); grid-template-rows: auto auto 1fr;
+         grid-template-areas: "scene where" "craft where" "who where"; align-items: start; column-gap: 32px; }
+  #where { position: sticky; top: 12px; }
+}
+
+/* The scene: the one raised thing on the page (law 13). */
+.scene { position: relative; padding: 6px 0 0; }
+.scene:has(.ask) { background: var(--raised); border-radius: var(--r); box-shadow: var(--shadow); padding: 22px 20px; }
+h1 { font: 800 clamp(34px, 9vw, 52px)/1.02 "Red Hat Display", sans-serif; letter-spacing: -0.025em;
+     margin: 0 0 10px; text-wrap: balance; max-width: 14ch; }
+h2 { font: 700 21px/1.2 "Red Hat Display", sans-serif; letter-spacing: -0.01em; margin: 0 0 10px; }
+.lede { font-size: 18px; color: var(--ink-2); margin: 0 0 16px; max-width: 34ch; text-wrap: pretty; }
+.art { display: block; width: 100%; height: auto; }
+.art--hero { max-width: 420px; margin: 4px 0 6px auto; }
+.art--state { max-width: 360px; margin: 6px 0 2px; }
+.facts { color: var(--ink-2); font-size: 15px; margin: 6px 0 0; }
+.facts b { color: var(--ink); font-weight: 500; }
+
+/* Tape: tied to something (law 4), marker capitals only here (law 3). */
+.tape { display: inline-block; font: 400 15px/1 "Permanent Marker", cursive; letter-spacing: .02em;
+        padding: 7px 16px 6px 12px; background: var(--tape); color: var(--tape-ink); transform: rotate(-2.2deg);
+        clip-path: polygon(0 8%, 3% 0, 97% 4%, 100% 0, 98% 52%, 100% 100%, 4% 94%, 0 100%, 2% 46%); }
+.tape--orange { background: var(--orange); color: #2A1A04; }
+.tape--grey { background: var(--line); color: var(--ink-2); }
+
+/* The question */
+/* Both prints at one height, side by side, each in its own natural shape (law 10). */
+.pair { display: flex; gap: 14px; margin: 22px 0 6px; align-items: flex-end; max-width: 440px; }
+/* Each figure grows by its photo's aspect ratio, so both come out exactly one height. */
+.pair .photo { flex: 1 1 0; min-width: 0; }
+.pair .photo--live { min-width: 34%; }
+.pair .photo img { width: 100%; height: auto; max-height: none; }
+.photo { margin: 0; position: relative; }
+/* A photo is a print laid on the field: natural shape, never cropped (law 10). */
+.photo img { display: block; width: auto; max-width: 100%; max-height: min(46vh, 360px); margin: 0 auto;
+             padding: 5px; background: var(--print); border-radius: 3px; box-shadow: 0 6px 16px -8px rgba(10,20,6,.55); }
+.photo--one img { max-height: min(40vh, 300px); margin: 0; }
+.photo .tape { position: absolute; z-index: 2; top: -13px; left: 50%; translate: -50% 0; white-space: nowrap; }
+.photo figcaption { font-size: 14px; color: var(--ink-2); margin-top: 10px; text-align: center; }
+.match { margin: 12px 0 12px; font: 700 20px/1.25 "Red Hat Display", sans-serif; }
+.match span { color: var(--ink-2); font: 400 16px "Red Hat Text", sans-serif; }
+.said { margin: 14px 0 0; font-size: 16px; color: var(--ink-2); }
+.said q { color: var(--ink); }
+.answers { display: grid; grid-template-columns: 1.15fr 1fr; gap: 10px; }
+button { font: 700 18px/1 "Red Hat Display", sans-serif; letter-spacing: -0.005em; min-height: 58px; border-radius: var(--r-in);
+         cursor: pointer; border: 2px solid transparent; padding: 0 14px; touch-action: manipulation; }
+.yes { background: var(--tape); color: var(--tape-ink); }
+.yes:hover { filter: brightness(1.06); }
+.no { background: transparent; color: var(--ink); border-color: var(--ink-2); }
+.no:hover { border-color: var(--ink); }
+button:active { transform: translateY(1px); }
+button:disabled { opacity: .45; cursor: default; }
+
+/* The map: rings, not a grid (law 5). */
+.panel { padding: 4px 2px; }
+.map { width: 100%; height: auto; display: block; border-radius: var(--r); }
+#where.is-stale .map { filter: grayscale(.85); opacity: .7; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--ink-2); margin: 8px 0 0; padding: 0; list-style: none; }
+.legend li { white-space: nowrap; }
+.legend svg { width: 22px; height: 14px; margin-right: 6px; vertical-align: -2px; }
+.note { font-size: 14px; color: var(--ink-2); margin: 8px 0 0; max-width: 52ch; }
+
+.seen { list-style: none; margin: 4px 0 0; padding: 0; }
+.seen li { display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: center; padding: 11px 0;
+           border-bottom: 1px solid var(--line); font-size: 16px; }
+.seen li:last-child { border-bottom: 0; }
+.seen .tape { font-size: 13px; padding: 5px 0 4px; width: 46px; text-align: center; }
+.seen li.empty { display: block; color: var(--ink-2); }
+.seen .num { color: var(--ink-2); font-size: 15px; text-align: right; }
+.seen .word { color: var(--ink-2); }
+.seen li.is-confirmed .word { color: var(--ink); font-weight: 700; }
+.seen li.is-rejected { color: var(--ink-2); } .seen li.is-rejected .word { text-decoration: line-through; text-decoration-color: var(--ring); }
+.tied { display: flex; flex-wrap: wrap; gap: 10px 12px; margin: 14px 0 4px; padding: 0; list-style: none; }
+
+footer { position: relative; z-index: 1; color: var(--ink-2); font-size: 14px; padding: 12px 0 30px; }
+footer p { margin: 4px 0; max-width: 70ch; }
+footer a { color: inherit; text-decoration-color: var(--line); text-underline-offset: 3px; }
+footer a:hover { color: var(--ink); text-decoration-color: var(--ink); }
+
+/* One moment per state (law 12). */
+@media (prefers-reduced-motion: no-preference) {
+  .ask .tape { animation: tie .55s cubic-bezier(.2,.9,.25,1.15) both .1s; transform-origin: 8% 50%; }
+  @keyframes tie { from { clip-path: polygon(0 8%, 3% 0, 3% 4%, 3% 0, 3% 52%, 3% 100%, 3% 94%, 0 100%, 2% 46%); } }
+  .knot { animation: knot .5s cubic-bezier(.3,1.4,.4,1) both; }
+  @keyframes knot { from { transform: rotate(-2.2deg) scale(1.25); } }
+  .settle { animation: settle .45s ease-out both; }
+  @keyframes settle { from { r: 7; opacity: 0; } }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="?" aria-label="Last Seen">{{svg:wordmark}}</a>
+    <span class="heard" id="heard" aria-live="polite">connecting</span>
+  </header>
+  <main>
+    <section class="scene" id="scene" aria-live="assertive"></section>
+    <section class="panel" id="where">
+      <h2>Where</h2>
+      <svg class="map" id="map" viewBox="0 0 400 400" role="img" aria-label="Map of the search area in rings from the point last seen"></svg>
+      <ul class="legend" id="legend"></ul>
+      <p class="note" id="mapnote"></p>
+    </section>
+    <section class="panel" id="who">
+      <h2>Everyone the drone has seen</h2>
+      <ul class="seen" id="seen"><li class="empty">Nobody yet</li></ul>
+    </section>
+  <div class="aircraft" id="aircraft" hidden>
+    <div class="status" id="status"></div>
+    <button class="recall" id="recall" title="It flies home and lands. The pilot can take over at any time.">Bring it back</button>
+  </div>
+  </main>
+  <footer>
+    <p>The drone follows only someone you confirm here. Bring it back flies it home and lands it. The pilot's switch on the controller overrides everything, always.</p>
+    <p>Built by Jonathan Andrei, tested by searching a park for himself with an eleven-year-old drone. More of what I build at <a href="https://jonathansolvesproblems.com">jonathansolvesproblems.com</a>.</p>
+  </footer>
+</div>
+<template id="art">
+  <img data-k="anchor" src="{{art:anchor}}" width="760" height="621" alt="A field sketch: one person on a patch of grass, a pink ribbon tied to a stake beside them, a small drone high above">
+  <img data-k="searching" src="{{art:searching}}" width="640" height="141" alt="A field sketch: a drone flying low over grass past a pink ribbon streaming from a stake">
+  <img data-k="found" src="{{art:found}}" width="520" height="530" alt="A field sketch: a person waving one arm up, a pink ribbon knotted at their feet">
+  <img data-k="landed" src="{{art:landed}}" width="640" height="252" alt="A field sketch: a drone resting on the grass, a loose pink ribbon beside it">
+</template>
+<script>
+const qs = new URLSearchParams(location.search);
+const token = qs.get("token") || "";
+let mission = qs.get("mission");
+const H = { "Authorization": "Bearer " + token, "Content-Type": "application/json" };
+let lastQ = null, lastScene = "";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const img = (data, url) => data ? "data:image/jpeg;base64," + data : (url || "");
+// Each print's figure grows by its aspect ratio, so a pair lands at exactly one height.
+document.addEventListener("load", (e) => {
+  const t = e.target;
+  if (t.tagName === "IMG" && t.closest(".pair")) t.parentNode.style.flexGrow = t.naturalWidth / t.naturalHeight;
+}, true);
+// <template> contents are not in the document: query the template's own fragment.
+const art = (k, cls) => { const t = $("art").content.querySelector(`img[data-k="${k}"]`).cloneNode(); t.className = "art " + cls; return t.outerHTML; };
+// 24-hour, as a searcher writes it on tape.
+const clock = (t) => new Date(t * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+const NBSP = " ";
+// Words first, the number after: same bands the drone uses to decide (reid.py ASK_AT, LOOK_AT).
+const strength = (x) => x >= 0.60 ? "Strong match" : x >= 0.30 ? "Possible match" : "Weak match";
+// Distances on this page are from the point last seen, the centre of the rings.
+const fromPls = (c) => c.e == null ? null : Math.hypot(c.e, c.n);
+
+async function api(path, opts = {}) {
+  const r = await fetch(path, { headers: H, ...opts });
+  if (!r.ok) throw new Error(r.status + " " + path);
+  return r.json();
+}
+const compass = (deg) => ["north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west"][Math.round(((deg % 360) + 360) % 360 / 45) % 8];
+
+function heading(pins) {
+  if (pins.length < 4) return null;
+  const a = pins[Math.max(0, pins.length - 10)], b = pins[pins.length - 1];
+  const de = b.e - a.e, dn = b.n - a.n, d = Math.hypot(de, dn), dt = Math.max(1, b.t - a.t);
+  if (d < 1.5) return "standing still";
+  return `heading ${compass(Math.atan2(de, dn) * 180 / Math.PI)}, ${(d / dt).toFixed(1)}${NBSP}m/s`;
+}
+
+function scene(m) {
+  const s = m.state || {};
+  const open = m.questions.filter(q => !q.decision).pop();
+  const conf = m.questions.filter(q => q.decision === "confirmed").pop();
+  const stale = s.received && (Date.now() / 1000 - s.received > 15) && !m.finished;
+  let key, html;
+  if (!mission || !m.state) {
+    key = "idle";
+    html = `<h1>Waiting for the drone</h1>
+      <p class="lede">It searches a field for someone, from a photo you give it, and asks you here before it follows anyone.</p>
+      ${art("anchor", "art--hero")}`;
+  } else if (m.finished) {
+    key = "done";
+    const found = m.finished.outcome.startsWith("found");
+    html = `<h1>${found ? "Found" : "Search ended"}</h1>
+      <p class="lede">${esc(m.finished.summary)}</p>${art(found ? "found" : "landed", "art--state")}`;
+  } else if (open) {
+    key = "ask:" + open.id;
+    if (lastQ !== open.id) { lastQ = open.id; if (navigator.vibrate) navigator.vibrate([200, 100, 200]); }
+    const x = Number(open.match);
+    html = `<div class="ask"><h1>Is this them?</h1>
+      <div class="pair">
+        <figure class="photo photo--live"><span class="tape">${esc(open.candidate)} · ${clock(open.created || Date.now() / 1000)}</span>
+          <img alt="What the drone sees now" src="${img(open.crop_data, open.crop_url)}"><figcaption>The drone, now</figcaption></figure>
+        <figure class="photo"><img alt="The photo you gave" src="${img(m.reference_data, m.reference_url)}"><figcaption>Your photo</figcaption></figure>
+      </div>
+      <p class="match">${strength(x)} <span><span class="rd">${x.toFixed(2)}</span> with the photo</span></p>
+      <div class="answers"><button class="yes" id="yes">That's them</button><button class="no" id="no">Not them</button></div>
+      <p class="said">The drone says: <q>${esc(open.message)}</q></p></div>`;
+  } else if (stale) {
+    key = "stale";
+    html = `<h1>No word from the drone since <span class="rd">${clock(s.received)}</span></h1>
+      <p class="lede">It holds its position by itself, and the pilot has it. This page catches up as soon as the link is back.</p>
+      ${art("landed", "art--state")}`;
+  } else if (conf) {
+    key = "follow:" + conf.id;
+    const h = heading(m.pins);
+    html = `<h1>Staying with them</h1>
+      <p class="lede">Their position goes on the map every second${h ? ": " + h : ""}.</p>
+      <figure class="photo photo--one"><span class="tape knot" style="left:20px;translate:none">${esc(conf.candidate)} · ${clock(conf.decided || Date.now() / 1000)}</span>
+        <img alt="The person you confirmed, as the drone saw them" src="${img(conf.crop_data, conf.crop_url)}"><figcaption style="text-align:left">You confirmed them at ${clock(conf.decided || Date.now() / 1000)}</figcaption></figure>`;
+  } else {
+    key = "search";
+    const cs = (s.candidates || []).filter(c => !c.near_confirmed);
+    html = `<h1>Searching</h1>
+      <p class="lede">You'll be asked here when the drone finds someone who could be them.</p>
+      ${cs.length ? `<p class="facts">Seen so far:</p>
+      <ul class="tied">${[...cs].sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true })).map(c => `<li><span class="tape ${c.status === "rejected" ? "tape--grey" : "tape--orange"}">${esc(c.id)}</span></li>`).join("")}</ul>`
+        : `<p class="facts">Nobody seen yet.</p>`}`;
+  }
+  if (key !== lastScene || key === "search") { $("scene").innerHTML = html; lastScene = key; }
+  if (open && $("yes")) {
+    const send = async (d) => {
+      $("yes").disabled = $("no").disabled = true;
+      try { await api(`/api/missions/${mission}/questions/${open.id}/answer`, { method: "POST", body: JSON.stringify({ decision: d }) }); }
+      catch (e) { $("yes").disabled = $("no").disabled = false; alert("Not sent: " + e.message); }
+    };
+    $("yes").onclick = () => send("confirmed");
+    $("no").onclick = () => send("rejected");
+  }
+}
+
+function map(m) {
+  const s = m.state || {};
+  const area = s.area || null;          // no search running: rings only, nothing invented
+  const cands = (s.candidates || []).filter(c => c.e != null && !c.near_confirmed && c.status !== "rejected");
+  const pins = m.pins.slice(-150);
+  // Size the rings to everything drawn, so nothing runs off the edge.
+  const pts = [...(area || []), ...cands.map(c => [c.e, c.n]), ...pins.map(p => [p.e, p.n]),
+               ...pins.filter(p => p.phone_e != null).map(p => [p.phone_e, p.phone_n]), ...(s.drone ? [[s.drone.e, s.drone.n]] : [])];
+  const far = pts.length ? Math.max(...pts.map(p => Math.hypot(p[0], p[1]))) : 0;
+  const reach = Math.max(30, Math.ceil(far * 1.04 / 10) * 10);
+  const P = ([e, n]) => [200 + e / reach * 190, 200 - n / reach * 190];
+  const empty = !s.drone && !area && !pins.length;
+  const stale = s.received && (Date.now() / 1000 - s.received > 15) && !m.finished;
+  $("where").classList.toggle("is-stale", !!stale);
+  // The ground: mown stripes, as a park looks from the drone. Rings are painted on it like
+  // field lines, every one labelled due south, below the point last seen.
+  let g = `<defs><pattern id="mown" width="44" height="44" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)">
+      <rect width="44" height="44" fill="var(--field)"/><rect width="22" height="44" fill="var(--field-2)"/></pattern></defs>
+    <rect width="400" height="400" fill="url(#mown)"/>`;
+  const step = reach > 60 ? 20 : 10;
+  for (let r = 10; r <= reach; r += 10) {
+    const rr = r / reach * 190;
+    g += `<circle cx="200" cy="200" r="${rr}" fill="none" stroke="var(--paint)" stroke-width="1.6"/>`;
+    if (r % step === 0) g += `<text class="rd" x="200" y="${200 + rr - 5}" font-size="10.5" font-weight="700" text-anchor="middle" fill="var(--ink-2)" paint-order="stroke" stroke="var(--field)" stroke-width="4">${r} m</text>`;
+  }
+  if (area) g += `<polygon points="${area.map(P).map(p => p.join(",")).join(" ")}" fill="none" stroke="var(--ink-2)" stroke-dasharray="4 5" stroke-width="1"/>`;
+  if (empty) g += `<text x="200" y="205" font-size="15" text-anchor="middle" fill="var(--ink-2)">No search running</text>`;
+  else g += `<circle cx="200" cy="200" r="3.5" fill="var(--ink)"/><text x="207" y="196" font-size="11" fill="var(--ink-2)" paint-order="stroke" stroke="var(--field)" stroke-width="3">point last seen</text>`;
+  // Two lines, not a pile of dots: where the drone puts them, and where their phone says.
+  const line = (xs, col, w, dash) => xs.length > 1 ? `<polyline points="${xs.map(P).map(p => p.join(",")).join(" ")}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round"${dash ? ` stroke-dasharray="${dash}"` : ""}/>` : "";
+  const ph = pins.filter(p => p.phone_e != null).map(p => [p.phone_e, p.phone_n]);
+  g += line(ph, "var(--navy)", 1.6, "1 4");
+  g += line(pins.map(p => [p.e, p.n]), "var(--chalk)", 2.2);
+  if (ph.length) { const [a, b] = P(ph[ph.length - 1]); g += `<circle cx="${a}" cy="${b}" r="6" fill="none" stroke="var(--navy)" stroke-width="1.8"/>`; }
+  if (pins.length) { const [x, y] = P([pins[pins.length - 1].e, pins[pins.length - 1].n]); g += `<circle class="settle" cx="${x}" cy="${y}" r="4.5" fill="var(--chalk)"/>`; }
+  const last = pins[pins.length - 1];
+  for (const c of cands) {
+    // the person being followed is wherever the latest pin is, not where they were first seen
+    const [x, y] = P(c.status === "confirmed" && last ? [last.e, last.n] : [c.e, c.n]);
+    const col = c.status === "confirmed" ? "var(--tape)" : "var(--orange)";
+    g += `<g transform="translate(${x} ${y}) rotate(-8)"><rect x="-3" y="-15" width="${18 + c.id.length * 8}" height="15" fill="${col}"/>
+          <text x="2" y="-3.5" font-family="Permanent Marker" font-size="11" fill="${c.status === "confirmed" ? "var(--tape-ink)" : "#2A1A04"}">${esc(c.id)}</text></g>
+          <circle cx="${x}" cy="${y}" r="3" fill="${col}"/>`;
+  }
+  if (s.drone) {
+    const [x, y] = P([s.drone.e, s.drone.n]);
+    g += `<g transform="translate(${x} ${y}) rotate(${s.drone.heading || 0})"><path d="M0 -11 L7 7 L0 3 L-7 7 Z" fill="var(--ink)" stroke="var(--ground)" stroke-width="1.5"/></g>`;
+  }
+  if (stale) g += `<g transform="translate(200 34)"><rect x="-92" y="-17" width="184" height="30" rx="4" fill="var(--ink)"/>
+    <text y="4" font-size="14" font-weight="700" text-anchor="middle" fill="var(--ground)">Last heard ${clock(s.received)}</text></g>`;
+  $("map").innerHTML = g;
+  // The legend lists only the marks on the map right now, drawn the same way.
+  const tag = (fill) => `<svg viewBox="0 0 22 14" aria-hidden="true"><rect x="2" y="2" width="18" height="10" fill="${fill}" transform="rotate(-8 11 7)"/></svg>`;
+  const dot = (o) => `<svg viewBox="0 0 22 14" aria-hidden="true">${o}</svg>`;
+  const phone = pins.some(p => p.phone_e != null);
+  const items = [
+    s.drone && [dot(`<path d="M11 1 L17 13 L11 10 L5 13 Z" fill="var(--ink)"/>`), "the drone"],
+    area && [dot(`<rect x="2" y="2" width="18" height="10" fill="none" stroke="var(--ink-2)" stroke-dasharray="3 3"/>`), "area to search"],
+    cands.some(c => c.status !== "confirmed") && [tag("var(--orange)"), "seen, not decided"],
+    cands.some(c => c.status === "confirmed") && [tag("var(--tape)"), "confirmed by you"],
+    pins.length && [dot(`<path d="M1 10 Q8 2 15 7" fill="none" stroke="var(--chalk)" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="7" r="4" fill="var(--chalk)"/>`), "where the drone puts them"],
+    phone && [dot(`<path d="M1 10 Q8 2 14 7" fill="none" stroke="var(--navy)" stroke-width="1.6" stroke-dasharray="1 4" stroke-linecap="round"/><circle cx="15" cy="7" r="5" fill="none" stroke="var(--navy)" stroke-width="1.8"/>`), "their phone's own GPS"],
+  ].filter(Boolean);
+  $("legend").innerHTML = items.map(([i, t]) => `<li>${i}${t}</li>`).join("");
+  $("mapnote").textContent = empty ? "" : `Rings are 10 m apart${step > 10 ? ", labelled every 20 m" : ""}, out from the point last seen.` +
+    (phone ? " Positions come from the drone's camera; the gap to the navy line is how far off they are." : "");
+}
+
+function seen(m) {
+  const cs = ((m.state && m.state.candidates) || []).filter(c => !c.near_confirmed);
+  $("seen").innerHTML = cs.length ? cs.map(c => {
+    const cls = c.status === "confirmed" ? "" : c.status === "rejected" ? " tape--grey" : " tape--orange";
+    const word = c.status === "confirmed" ? "confirmed by you" : c.status === "rejected" ? "you said not them" : strength(Number(c.match)).toLowerCase();
+    const last = m.pins[m.pins.length - 1];
+    const d = c.status === "confirmed" && last ? Math.hypot(last.e, last.n) : fromPls(c);
+    return `<li class="is-${c.status}"><span class="tape${cls}">${esc(c.id)}</span><span class="word" title="${Number(c.match).toFixed(2)} match with the photo">${word}</span>
+      <span class="num rd">${d != null ? d.toFixed(0) + NBSP + "m out" : ""}</span></li>`;
+  }).join("") : `<li class="empty">Nobody yet</li>`;
+}
+
+async function tick() {
+  try {
+    let m = { questions: [], pins: [], state: null };
+    if (!mission) {
+      const ms = await api("/api/missions");
+      if (ms.length) mission = ms[0].id;
+    }
+    if (mission) m = await api(`/api/missions/${mission}`);
+    const s = m.state || {};
+    const ago = s.received ? Math.max(0, Math.round(Date.now() / 1000 - s.received)) : null;
+    $("heard").textContent = !mission ? "no search yet" : ago == null ? "" : ago <= 2 ? "live" : `heard ${ago}${NBSP}s ago`;
+    $("heard").classList.toggle("is-live", ago != null && ago <= 2);
+    // The strip shows while there is an aircraft to bring back.
+    $("aircraft").hidden = !(m.state && !m.finished);
+    $("status").innerHTML = [s.drone ? `<span><b class="rd">${Number(s.drone.alt).toFixed(0)}${NBSP}m</b> up</span>` : "",
+      s.battery != null ? `<span>battery <b class="rd">${s.battery}%</b></span>` : ""].filter(Boolean).join("");
+    const open = m.questions.some(q => !q.decision);
+    document.title = (open ? "Is this them? · " : "") + "Last Seen";
+    scene(m); map(m); seen(m);
+  } catch (e) { $("heard").textContent = "connection lost, retrying"; }
+}
+$("recall").onclick = async () => {
+  if (!mission || !confirm("Ask the drone to come back now?")) return;
+  await api(`/api/missions/${mission}/recall`, { method: "POST", body: "{}" });
+};
+tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>
