@@ -25,6 +25,8 @@ The coordinator in the opening story is a composite and is labelled as one.
 
 ## 2. Architecture
 
+![Architecture: OpenCV 5 on the laptop, the Claude agent, the envelope, AWS Lambda, DynamoDB and S3](img/architecture.png)
+
 ```
  phone (DJI SDK bridge, Kotlin)  <-- USB, WebSocket -->  laptop (Python)
    video 1280x720, telemetry 10 Hz                       perception: OpenCV 5, every frame
@@ -85,6 +87,37 @@ Decisions the model made on 25 October, from `trace.jsonl`:
 - Run 3: scan; rejected a detection whose crop held no person; asked about P2 at 0.85;
   when no answer came in 90 s, kept covering the area and asked again; followed on
   confirmation.
+
+### 4.1 Agentic Vision evidence
+
+![The agent loop, with run 3's trace](img/agent-workflow.png)
+
+OpenCV 5 output changes the next tool call. From `trace.jsonl`, 25 October 2026:
+
+| Run | What OpenCV reported | What Claude did next |
+|---|---|---|
+| 1 | best candidates P5 0.24, P1 0.23, P6 0.07 | look_closer P5, then P6; scores unchanged, so fly_to two corners and scan again; never asked |
+| 2 | P1 0.76 with no crop yet described | look_closer P1, then ask_coordinator P1 |
+| 3 | P2 0.85, P3 0.25 (crop held no person) | ask_coordinator P2 on the first scan, P3 ignored |
+| 3 | coordinator: no answer in 90 s | fly_to 0, -8; new P6 0.58; look_closer P6; ask about P2 again |
+
+Task success: 2 of 3 runs found, confirmed and followed the person (runs 2 and 3); run 1 correctly
+did not ask on a weak match and was recalled. Failure handling: a missing answer is treated as
+"not a no" and the search continues; an API error returns the aircraft home; the battery floor
+aborted run 3 and the envelope landed it. Observability: every model turn, tool call, tool result
+and candidate table is in `trace.jsonl`, every scored detection in `perception.jsonl`, and the
+coordinator's page shows state, candidates and pins live from DynamoDB. Human control: only
+`follow_confirmed` moves toward a person, and it raises `NotConfirmed` unless the coordinator
+confirmed that candidate (tested); the coordinator can recall the aircraft from the page; the
+pilot's mode switch overrides all of it.
+
+### 4.2 Build, deploy and test
+
+Pinned dependencies: `brain/requirements.lock.txt` (the exact environment the flights and tests
+ran in: Python 3.14.4, opencv-python 5.0.0.93, anthropic 1.6.0, boto3 1.43.114). Install with
+`pip install -r brain/requirements.lock.txt && pip install -e brain`. Tests: `pytest -q` in
+`brain/` (159 tests, no hardware, no key). Deploy: `python infra/deploy.py --profile <aws
+profile>`; teardown: `python infra/teardown.py --profile <aws profile> --yes`.
 
 ## 5. Evaluation
 

@@ -35,6 +35,10 @@ measured; the report says why.
 
 ## How it works
 
+![Architecture](docs/img/architecture.png)
+
+![The agent loop with run 3's trace](docs/img/agent-workflow.png)
+
 ```
  Phantom 3 Standard  --Wi-Fi-->  phone (Kotlin bridge, DJI MSDK)  --USB-->  laptop (Python)
    720p video, telemetry            video out, sticks in                 OpenCV 5 at frame rate
@@ -116,6 +120,7 @@ check_claims.py     fails when a number in the docs no longer matches the data
 cd brain
 python -m venv .venv
 .venv\Scripts\activate
+pip install -r requirements.lock.txt   # the exact pinned environment the flights ran in
 pip install -e ".[dev]"
 pytest -q                 # 159 tests, about five minutes, no hardware
 ```
