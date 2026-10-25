@@ -11,7 +11,7 @@ Last Seen
 ## Tagline
 
 ```
-An eleven-year-old drone finds a person from one photo, asks a human "Is this them?", and only then follows. Flown live: found on the first scan at 0.85, followed 90 s, 49 pins on the coordinator's map.
+A 2015 drone finds a person from one photo, asks a human "Is this them?", then follows. Flown live: found on the first scan at 0.85, followed 90 s, 49 pins on the map.
 ```
 
 ## Video link
