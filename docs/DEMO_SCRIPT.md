@@ -40,7 +40,7 @@ nothing happens until a human says that's them.
 |---|---|---|
 | So this drone's eleven years old | the aircraft handed to the lens, close on its camera | DSLR, 25 Oct |
 | Today I gave it one photo | the reference print dropped on the field, tape tied on | run 3 reference, animated page |
-| and sent it to find me | the drone climbing over the trees, stabilised | DSLR, run 2 |
+| and sent it to find me | the drone's own view lifting off, him shrinking below | run 3 |
 | Picture a search coordinator | the marker layout as a dusk time-lapse, the scenario card appearing line by line on its words (person, clock), labelled "Composite scenario" | DSLR tripod, 25 Oct |
 | and all she's got | the volunteer walking out to the aircraft on the empty infield, the card's last two lines (photo, drone) | DSLR |
 | She's made up | him walking away across the field | DSLR |
@@ -51,7 +51,7 @@ nothing happens until a human says that's them.
 | Claude decides where to look | drone POV with the trace typed beside it, then the Phantom Bridge app on the phone during run 3's follow | run 3 trace, phone screen |
 | Every frame runs through | the real detector drawn on the real frames, ms and fps readout | run 3 frames |
 | Anyone it spots | crop beside the photo, three bars: re-ID, clothing, match | run 3 frames |
-| Then the camera model | the feet point and the ground estimate, then the map filling | run 3 frames, run 2 pins |
+| Then the camera model | the printed markers panned one by one with the camera check's result, the feet point and the ground estimate, then the map filling | phone, run 3 frames, run 2 pins |
 | On my first run | run 1's ground-level reference as a print | run 1 reference |
 | From the air it only scored | run 1 frames with the weak scores, then the page with no question | run 1 |
 | On the third run | the page: Searching, then the question lands at 0.85 | run 3, recorded |

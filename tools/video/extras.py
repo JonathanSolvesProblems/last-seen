@@ -153,6 +153,27 @@ def follow_pins():
     print("23-follow-pins")
 
 
+# ---- the markers, panned one by one -------------------------------------------
+def markers():
+    import json
+    ct = json.load(open(ROOT / "results" / "camera_truth_flight03.json"))["summary"]
+    bg = Image.new("RGB", (1920, 1080), (17, 26, 16))
+    d = ImageDraw.Draw(bg)
+    h1 = font("RedHatDisplay[wght].ttf", 58, 800)
+    t = font("RedHatText[wght].ttf", 30, 400)
+    b = font("RedHatText[wght].ttf", 30, 700)
+    x = 110
+    d.text((x, 250), "The camera's own check", font=h1, fill=(238, 241, 230))
+    d.text((x, 350), "Printed ArUco markers, 190 mm, checked with a ruler.", font=t, fill=(169, 181, 159))
+    d.text((x, 396), "OpenCV's solvePnP on the flight footage puts the camera", font=t, fill=(169, 181, 159))
+    d.text((x, 442), f"{ct['measured_height_median_m']} m above them where the barometer said {ct['reported_alt_median_m']} m.", font=b, fill=(238, 241, 230))
+    d.text((x, 506), "A steady 2 m gap: the lens model, not noise. Report, section 5.4.", font=t, fill=(169, 181, 159))
+    bg.save(W_ / "markers_bg.png")
+    run(["-ss", 0.3, "-t", 8, "-i", D / "phone-camera" / "20261025_114527.mp4", "-loop", "1", "-i", W_ / "markers_bg.png",
+         "-filter_complex", "[0:v]scale=-2:1080[p];[1:v][p]overlay=1920-24-W:0:shortest=1,format=yuv420p", *ENC, "-r", "30", OUT / "14a-markers.mp4"])
+    print("14a-markers")
+
+
 if __name__ == "__main__":
-    for w in (sys.argv[1:] or ["briefing", "bridge", "follow_pins"]):
+    for w in (sys.argv[1:] or ["briefing", "bridge", "follow_pins", "markers"]):
         globals()[w]()
