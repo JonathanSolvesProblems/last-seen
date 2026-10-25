@@ -123,12 +123,17 @@ coordinator rather than hiding it. The fix is in the association rule.
 Run 2, `follow_confirmed` record: 90 s, 566 frames, 264 locked (47%), 7 identity drops
 (the per-frame identity check below 0.30 released the lock; the lock was re-seeded only
 through the matcher), 49 pins. Run 3: 64 s of following until the battery floor; the
-pins of that run were lost to a bug (no save on abort), fixed the same day in
-`scripts/last_seen.py` (`try/finally rt.save()`).
+laptop's local copy of its pins was lost to a bug (no save on abort, fixed the same day in
+`scripts/last_seen.py` with `try/finally rt.save()`), but all 27 had already reached the
+coordinator's map on AWS and are saved from there in
+`brain/runs/last-seen/20261025-122602/pins_from_mission_control.json`.
 
-**Pin error against the subject's phone GPS: not measured.** The bridge app was carrying
-the phone's own GNSS in telemetry, but the field laptop ran an earlier build in run 2 and
-the run 3 pins were lost as above. The map in the video shows the drone's pins only.
+**Pin error against the subject's phone GPS: not measured.** The design grades each pin
+against GNSS from a phone the subject carries. On the day the only phone was the bridge
+phone, plugged into the laptop at the base: run 3's 27 pins each carry its fix, and that
+fix stays within 0.2 m of one spot for the whole follow while the subject moved more than
+20 m. It is the base's position, not the subject's, so it cannot grade the pins and is
+not used. Measuring this needs a second phone on the subject.
 
 After run 2 the identity threshold for an established follow was given hysteresis
 (`FOLLOW_DROP_AT = 0.20`, seeding still needs 0.30), because dark clothing seen from
