@@ -41,7 +41,7 @@ BEATS = [
     ("claude decides where to look",
      [("11-panel", 0.62, "none", "", 21.0), ("11b-bridge", 0.38, "none", "The phone app, during run 3", 0)]),
     ("every frame runs through",
-     [("12-detect", 1, "none", "Measured live on this footage, laptop CPU", 0)]),
+     [("12-detect", 1, "none", "Measured live on this footage, laptop CPU", 7.0)]),
     ("anyone it spots",
      [("13-match", 1, "none", "", 0)]),
     ("then the camera model",
