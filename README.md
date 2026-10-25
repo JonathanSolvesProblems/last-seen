@@ -19,9 +19,11 @@ below is read from the run files in `brain/runs/last-seen/`.
 | 2, 12:11 | aerial crop | scan, look closer (0.76), asked, confirmed, followed 90 s | 49 pins; lock held 47% of frames, 7 identity drops, all reported by the agent in its own summary |
 | 3, 12:26 | aerial crop | found on the first scan at 0.85, asked, confirmed, followed | battery reached its 18% floor after 64 s of following; the envelope aborted and the aircraft landed itself |
 
-What is measured and what is not is in the report. The two numbers that were planned
-and never produced (pin error against the subject's phone GPS, and the gimbal angle
-check against printed markers) are listed there as not measured, with the reason.
+The printed ground markers were caught in the onboard video, so the camera check ran on
+the footage afterwards: from a single 190 mm marker, `solvePnP` puts the camera
+2.0 m lower than the barometer says, steadily, which points at the spec-sheet lens
+model (report 5.4). Pin error against the subject's phone GPS was planned and not
+measured; the report says why.
 
 ## How it works
 

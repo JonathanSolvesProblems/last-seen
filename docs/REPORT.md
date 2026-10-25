@@ -55,8 +55,8 @@ the laptop.
 | `imgproc` | HSV clothing histograms by body band (torso 0.18 to 0.52, legs 0.52 to 0.90 of the box), `compareHist`, blob preparation | yes |
 | camera model | feet of each box to a ground point from altitude, gimbal pitch and heading; the pins on the map | yes |
 | image-space servo | yaw from horizontal offset, range from box height, gimbal from vertical offset; no calibration needed to follow | yes |
-| `objdetect` ArUco, ChArUco | lens calibration board (7x5, 30 mm) and four 190 mm ground markers, printed and checked with a ruler | printed, laid out, not flown (battery) |
-| `calib`, `3d` | `calibrateCamera` on ChArUco views; `solvePnP` (IPPE) + `solvePnPRefineLM` on the ground markers for the camera's real pitch and height | tested in simulation only (section 5.4) |
+| `objdetect` ArUco, ChArUco | lens calibration board (7x5, 30 mm) and four 190 mm ground markers, printed and checked with a ruler | markers detected in the onboard video (5.4) |
+| `calib`, `3d` | `solvePnP` (IPPE square) + `solvePnPRefineLM` on the ground markers in the flight footage for the camera's real height and pitch; `calibrateCamera` on ChArUco views | single-marker pose measured on 25 Oct footage (5.4); ChArUco calibration not flown |
 
 Detection on OpenCV DNN matches the previous onnxruntime path to within 2 px on the
 same boxes (`test_opencv_dnn_and_onnxruntime_find_the_same_people`). Detector speed on
@@ -135,12 +135,31 @@ After run 2 the identity threshold for an established follow was given hysteresi
 above swung per-frame scores enough to drop a confirmed person seven times in 90 s.
 That change has not been flown.
 
-### 5.4 Camera truth
+### 5.4 Camera truth, from the flight footage
 
-**Not measured in flight.** The markers were printed (190 mm, checked), laid out and
-photographed; the battery was spent on the missions. In simulation the same tool found
-the renderer's unannounced gimbal clamp (commanded and reported -25.0, measured -30.7),
-and recovered pitch at -23, -37 and -55 degrees from synthetic renders (`tests/test_calib.py`).
+The four 190 mm markers (ruler-checked) were on the infield during the flights and
+the onboard 2.7K video caught them in 137 sampled half-seconds of runs 1 and 2
+(260 marker detections at altitude, median 50.5 px across). For each detection
+`scripts/camera_truth_footage.py` solves the camera's pose from that one marker
+(`solvePnP` with `SOLVEPNP_IPPE_SQUARE`, refined with `solvePnPRefineLM`): one marker of
+known size needs no surveyed layout. It compares the result with the telemetry at the
+same moment (clip and log aligned on their common end). Source:
+`results/camera_truth_flight03.json`.
+
+- **Height:** the camera measured itself 5.9 m above the markers where the barometer
+  reported 8.0 m, a median gap of -2.0 m, and the gap is steady (interquartile
+  range about 0.3 m in each run). A steady gap is a systematic error, not noise. The
+  likely cause is the lens model: these numbers use the spec-sheet 94 degree field of
+  view, and the 2.7K video mode crops the sensor, so the real focal length is longer and
+  every distance from the camera model comes out short. A drifting barometer would show
+  the same sign. The ChArUco calibration (implemented, not flown) is what separates the
+  two, and until then the pins on the map carry the same scale error.
+- **Pitch:** the measured pitch agrees with the gimbal's report to a median of 4.3 degrees,
+  but single frames scatter widely (interquartile range -11.5 to 12.8 degrees). One 50 px
+  marker seen near-overhead is not enough to pin the angle in a single frame. With
+  two or more markers in a frame and a measured layout, the multi-marker solve in
+  `phantom_brain/calib.py` (tested in simulation, where it found the renderer's
+  unannounced gimbal clamp: commanded and reported -25.0, measured -30.7) would.
 
 ### 5.5 Ablation, OpenCV switched off
 
@@ -166,6 +185,7 @@ Published failure cases from flights 01 and 02 are in `flights/*/BUGS.md`. From 
 - One person split into two tracks (5.2).
 - Follow lock held 47% in run 2 (5.3).
 - Pins lost on abort (fixed), phone GPS not in the saved pins (5.3).
+- The spec-sheet lens model reads distances about a quarter short in this video mode (5.4).
 - The aircraft has no obstacle sensing; it is kept over open ground by the geofence and
   ceiling.
 

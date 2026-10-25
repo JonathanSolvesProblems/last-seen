@@ -50,6 +50,10 @@ def asked(run: str) -> bool:
     return any(r.get("kind") == "tool" and r["name"] == "ask_coordinator" for r in trace(run))
 
 
+def camtruth() -> dict:
+    return json.loads((R / "camera_truth_flight03.json").read_text())["summary"]
+
+
 def follow2() -> dict:
     return tool(RUN2, "follow_confirmed")["record"]
 
@@ -75,6 +79,13 @@ CLAIMS = [
     ("docs/REPORT.md", r"\d+ locked \((\d+)%\)", lambda: round(100 * follow2()["locked_fraction"])),
     ("docs/REPORT.md", r"(\d+) identity drops", lambda: follow2()["identity_drops"]),
     ("docs/REPORT.md", r"(\d+) pins\. Run 3", lambda: follow2()["pins"]),
+    # camera truth from the footage
+    ("docs/REPORT.md", r"\((\d+) marker detections at altitude", lambda: camtruth()["detections"]),
+    ("docs/REPORT.md", r"measured itself (\d+(?:\.\d+)?) m above", lambda: camtruth()["measured_height_median_m"]),
+    ("docs/REPORT.md", r"barometer\s+reported (\d+(?:\.\d+)?) m", lambda: camtruth()["reported_alt_median_m"]),
+    ("docs/REPORT.md", r"median gap of (-?\d+(?:\.\d+)?) m", lambda: camtruth()["height_gap_median_m"]),
+    ("docs/REPORT.md", r"report to a median of (-?\d+(?:\.\d+)?) degrees", lambda: camtruth()["pitch_gap_median_deg"]),
+    ("README.md", r"camera\s+(\d+(?:\.\d+)?) m lower than the barometer", lambda: abs(camtruth()["height_gap_median_m"])),
     # README table
     ("README.md", r"best match (\d\.\d+) \| never asked", lambda: best_match(RUN1)),
     ("README.md", r"look closer \((\d\.\d+)\), asked", lambda: best_match(RUN2)),
