@@ -11,7 +11,7 @@ Last Seen: Drone Search That Asks Before It Follows
 ## Tagline
 
 ```
-A 2015 drone finds a person from one photo, asks a human "Is this them?", then follows. Flown live: found on the first scan at 0.85, followed 90 s, 49 pins on the map.
+A 2015 drone finds a person from one photo, asks a human "Is this them?", then follows. Flown live: found on its first scan at 0.85; another run followed 90 s, 49 pins.
 ```
 
 ## Video link

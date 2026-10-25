@@ -95,7 +95,7 @@ CLAIMS = [
     ("README.md", r"lock held (\d+)% of frames", lambda: round(100 * follow2()["locked_fraction"])),
     ("README.md", r"(\d+) identity drops", lambda: follow2()["identity_drops"]),
     # submission text
-    ("docs/SUBMISSION.md", r"found on the first scan at (\d\.\d+), followed", lambda: best_match(RUN3)),
+    ("docs/SUBMISSION.md", r"found on its first scan at (\d\.\d+); another run", lambda: best_match(RUN3)),
     ("docs/SUBMISSION.md", r"followed (\d+) s, (\d+) pins", lambda: follow2()["followed_s"]),
     ("docs/SUBMISSION.md", r"followed \d+ s, (\d+) pins", lambda: follow2()["pins"]),
     ("docs/SUBMISSION.md", r"held only (\d+)% of the time", lambda: round(100 * follow2()["locked_fraction"])),
