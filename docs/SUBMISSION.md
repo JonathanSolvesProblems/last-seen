@@ -39,11 +39,15 @@ Last Seen takes one photo and a search area. The drone searches on its own, deci
 
 ## How I built it
 
+![Architecture: OpenCV 5 on the laptop, the Claude agent, the envelope, AWS](https://raw.githubusercontent.com/JonathanSolvesProblems/last-seen/master/docs/img/architecture.png)
+
 - **Aircraft:** a 2015 DJI Phantom 3 Standard, with a Kotlin bridge app on the phone (DJI Mobile SDK) carrying the video out and the stick commands in.
 - **OpenCV 5, every frame:** the new DNN engine runs a YOLO person detector at 20 to 24 fps on a laptop CPU. Each person is compared with the photo two ways: the OpenCV Model Zoo person re-identification network and HSV clothing colour by body band. A camera model turns each person's feet into a point on the ground. An image-space servo flies the follow from where the person sits in the frame.
 - **Claude, every few seconds:** six strict tools (scan here, fly to, look closer, ask the coordinator, follow the confirmed person, end the mission). It sees the candidate table and the crops and chooses; the runtime keeps the aircraft holding and perceiving while it thinks. Every decision is logged in trace.jsonl.
 - **AWS, where the coordinator is:** a Lambda function URL serves her page and the API, DynamoDB stores every answer with a conditional write so it cannot be changed, and the crops sit in a private S3 bucket behind short-lived links. One CloudFormation stack, one command up and one command down.
 - **Safety in code, not the prompt:** the follow code raises NotConfirmed for anyone the coordinator did not confirm (tested), and a flight envelope checks battery, ceiling, geofence and link on every control tick.
+
+![The agent loop: OpenCV output changes Claude's next tool call, from run 3's trace](https://raw.githubusercontent.com/JonathanSolvesProblems/last-seen/master/docs/img/agent-workflow.png)
 
 ## Challenges I ran into
 
