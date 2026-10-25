@@ -17,7 +17,7 @@ A 2015 drone finds a person from one photo, asks a human "Is this them?", then f
 ## Video link
 
 ```
-[video link]
+https://www.youtube.com/watch?v=b4s_inmWlk8
 ```
 
 ## Repository

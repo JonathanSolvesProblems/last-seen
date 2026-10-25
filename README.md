@@ -5,8 +5,16 @@ follows anyone, and keeps their position on the coordinator's map. Built on an
 eleven-year-old DJI Phantom 3 Standard, OpenCV 5, Claude, and AWS, for the OpenCV AI
 Competition 2026.
 
-Demo video: [link in the submission]. Report with every number and where it came
-from: [docs/REPORT.md](docs/REPORT.md). Repository: https://github.com/JonathanSolvesProblems/last-seen
+- **Demo video:** https://www.youtube.com/watch?v=b4s_inmWlk8
+- **Write-up:** https://jonathanandrei.com/blog/last-seen-drone-finds-person-from-one-photo-opencv/
+- **Report, with every number and where it came from:** [docs/REPORT.md](docs/REPORT.md)
+
+| | |
+|---|---|
+| ![OpenCV 5 DNN detecting a person from the drone](docs/img/2-opencv-detects.jpg) | ![The coordinator's page asking Is this them?](docs/img/4-is-this-them.jpg) |
+| OpenCV 5's DNN engine runs YOLO on the drone's own video, 41 ms a frame on a laptop CPU. | Run 3 found me on its first scan at 0.85 and asked. Nothing follows until a human answers. |
+| ![The drone following, with the live map inset](docs/img/6-follow-and-map.jpg) | ![The camera check from the printed markers](docs/img/7-camera-check.jpg) |
+| After "that's them", it follows and drops a pin every second. Run 2: 90 s, 49 pins. | solvePnP on the printed markers in the footage: camera 5.9 m up where the barometer said 8.0 m. |
 
 ## What happened on 25 October 2026
 
