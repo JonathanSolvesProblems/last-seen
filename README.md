@@ -6,7 +6,7 @@ eleven-year-old DJI Phantom 3 Standard, OpenCV 5, Claude, and AWS, for the OpenC
 Competition 2026.
 
 Demo video: [link in the submission]. Report with every number and where it came
-from: [docs/REPORT.md](docs/REPORT.md).
+from: [docs/REPORT.md](docs/REPORT.md). Repository: https://github.com/JonathanSolvesProblems/last-seen
 
 ## What happened on 25 October 2026
 
