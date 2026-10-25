@@ -65,7 +65,7 @@ The model is good at choosing what to do next and should never be the thing that
 ## What's next for Last Seen: Drone Search That Asks Before It Follows
 
 - A view-invariant match, so an ordinary photo taken at eye level works from the air.
-- Grade every pin against the subject's own phone GPS (the bridge already carries it; this flight did not record it).
+- Grade every pin against GPS from a phone the subject carries (the bridge already sends it; on the day the only phone stayed at the base).
 - A lens calibration flown on the aircraft, to close the 2 m height gap.
 - Real search-and-rescue volunteers using it on a training exercise.
 
