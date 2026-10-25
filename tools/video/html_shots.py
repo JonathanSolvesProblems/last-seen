@@ -95,26 +95,26 @@ def arch():
     .arrow::after { content:""; position:absolute; right:-2px; top:-8px; border:10px solid transparent; border-left:14px solid var(--line); }
     .arrow.pink { background:var(--tape); } .arrow.pink::after { border-left-color:var(--tape); }
     @keyframes in { to { opacity:1; transform:none; } }
-    .back { margin-top:46px; display:flex; justify-content:center; align-items:center; gap:18px; opacity:0; animation: in .5s ease-out 6.2s forwards; font-size:28px; color:var(--ink-2); }
+    .back { margin-top:46px; display:flex; justify-content:center; align-items:center; gap:18px; opacity:0; animation: in .5s ease-out 3.6s forwards; font-size:28px; color:var(--ink-2); }
     .back .tape { font-size:26px; }
-    .ab { position:absolute; bottom:70px; left:90px; right:90px; display:flex; justify-content:space-between; font-size:24px; color:var(--ink-2); opacity:0; animation: in .5s ease-out 7s forwards; }
+    .ab { position:absolute; bottom:70px; left:90px; right:90px; display:flex; justify-content:space-between; font-size:24px; color:var(--ink-2); opacity:0; animation: in .5s ease-out 4.2s forwards; }
     """
     body = """<div class="wrap">
       <h1>How the answer travels</h1>
       <div class="row">
-        <div class="node" style="animation-delay:.3s"><h2>Phantom 3 Standard</h2><p>2015 aircraft, its own camera</p><p>720p over Wi-Fi to the phone</p><p>Android bridge app: video out, sticks in</p></div>
-        <div class="arrow" style="animation-delay:1.0s"></div>
-        <div class="node" style="animation-delay:1.3s"><h2>Laptop, in the field</h2><p><b>OpenCV 5</b> DNN: YOLO person detector</p><p><b>OpenCV</b> model zoo re-ID + clothing colour</p><p><b>OpenCV</b> camera model: feet to ground</p><p><b>Claude</b> picks the next action from the tools</p></div>
-        <div class="arrow pink" style="animation-delay:2.6s"></div>
-        <div class="node" style="animation-delay:2.9s"><h2>AWS</h2><p><b>Lambda</b> serves the page and the API</p><p><b>DynamoDB</b> keeps every decision, conditional write: once answered, never changed</p><p><b>S3</b> holds the crops, private, short-lived links</p><p><b>CloudFormation</b>, one command up, one down</p></div>
-        <div class="arrow pink" style="animation-delay:4.4s"></div>
-        <div class="node" style="animation-delay:4.7s"><h2>The coordinator's phone</h2><p>Is this them?</p><p>The photo beside what the drone sees</p><p><span class="tape">That's them</span></p></div>
+        <div class="node" style="animation-delay:.2s"><h2>Phantom 3 Standard</h2><p>2015 aircraft, its own camera</p><p>720p over Wi-Fi to the phone</p><p>Android bridge app: video out, sticks in</p></div>
+        <div class="arrow" style="animation-delay:.7s"></div>
+        <div class="node" style="animation-delay:.9s"><h2>Laptop, in the field</h2><p><b>OpenCV 5</b> DNN: YOLO person detector</p><p><b>OpenCV</b> model zoo re-ID + clothing colour</p><p><b>OpenCV</b> camera model: feet to ground</p><p><b>Claude</b> picks the next action from the tools</p></div>
+        <div class="arrow pink" style="animation-delay:1.6s"></div>
+        <div class="node" style="animation-delay:1.8s"><h2>AWS</h2><p><b>Lambda</b> serves the page and the API</p><p><b>DynamoDB</b> keeps every decision, conditional write: once answered, never changed</p><p><b>S3</b> holds the crops, private, short-lived links</p><p><b>CloudFormation</b>, one command up, one down</p></div>
+        <div class="arrow pink" style="animation-delay:2.5s"></div>
+        <div class="node" style="animation-delay:2.7s"><h2>The coordinator's phone</h2><p>Is this them?</p><p>The photo beside what the drone sees</p><p><span class="tape">That's them</span></p></div>
       </div>
       <div class="back"><span>Only a confirmed answer reaches the follow code</span><span class="tape tape--orange">no answer, no follow</span></div>
       <div class="ab"><span>Nothing fabricated: every number on screen is read from a run file</span><span>IAM user scoped to the stack · no key leaves the laptop</span></div>
     </div>"""
     write("arch", body, css)
-    record("arch", 14)
+    record("arch", 9)
 
 
 # ---- terminal ---------------------------------------------------------------
@@ -123,22 +123,21 @@ def terminal():
     dry = [re.sub(r"\b\d{12}\b", "•" * 6, l) for l in dry if "Connect timeout" not in l]
     url = json.load(open(ROOT / "infra" / "outputs.json"))["Url"].rstrip("/")
     url = re.sub(r"https://([a-z0-9]{6})[a-z0-9]+\.", lambda m: "https://" + m.group(1) + "….", url)
+    ev = (ROOT / "broll" / "_work" / "aws_evidence.txt").read_text(encoding="utf-8").strip().splitlines()
     lines = ["$ python infra/deploy.py --profile lastseen",
-             f"mission control: {url}/?token=••••••••",
-             "field laptop:    --coordinator mission-control --mission-control " + url,
-             "", "$ python infra/teardown.py --profile lastseen"] + dry
+             f"mission control: {url}/?token=••••••••", ""] + ev + ["", "$ python infra/teardown.py --profile lastseen"] + dry[:4]
     css = """
-    .term { position:absolute; inset:90px 120px; background:#0C130B; border:1px solid var(--line); border-radius:14px; padding:40px 48px;
-            font: 500 27px/1.55 ui-monospace, "Cascadia Mono", Consolas, monospace; color:var(--ink); white-space:pre-wrap; }
+    .term { position:absolute; inset:60px 100px; background:#0C130B; border:1px solid var(--line); border-radius:14px; padding:34px 44px;
+            font: 500 24px/1.5 ui-monospace, "Cascadia Mono", Consolas, monospace; color:var(--ink); white-space:pre-wrap; }
     .bar { height:14px; display:flex; gap:10px; margin-bottom:26px; } .bar i { width:14px; height:14px; border-radius:50%; background:var(--line); }
     .c { color:var(--ink-2); } .p { color:var(--tape); } .k { color:var(--navy); }
     .cur { display:inline-block; width:14px; height:30px; background:var(--ink); vertical-align:-6px; animation: blink 1s steps(2) infinite; }
     @keyframes blink { 50% { opacity:0; } }
     """
     body = """<div class="term"><div class="bar"><i></i><i></i><i></i></div><div id="t"></div><span class="cur"></span></div>"""
-    script = "const L=%s;let i=0,j=0;const el=document.getElementById('t');function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}function cls(s){return s.startsWith('$')?'p':(s.startsWith('  LEFT')||s.includes('DRY RUN')?'k':'c')}function step(){if(i>=L.length)return;const line=L[i];const done=el.querySelectorAll('div').length>i?el.querySelectorAll('div')[i]:null;if(!done){const d=document.createElement('div');d.className=cls(line);el.appendChild(d)}const d=el.querySelectorAll('div')[i];j+=line.startsWith('$')?1:4;d.textContent=line.slice(0,j);if(j>=line.length){i++;j=0;setTimeout(step,line.startsWith('$')?650:120)}else setTimeout(step,line.startsWith('$')?45:12)}setTimeout(step,500);" % json.dumps(lines)
+    script = "const L=%s;let i=0,j=0;const el=document.getElementById('t');function cls(s){return s.startsWith('$')?'p':(s.startsWith('  LEFT')||s.includes('DRY RUN')||s.startsWith('AWS::')||s.startsWith('HTTP/2')?'k':'c')}function step(){if(i>=L.length)return;const line=L[i];if(el.querySelectorAll('div').length<=i){const d=document.createElement('div');d.className=cls(line);el.appendChild(d)}const d=el.querySelectorAll('div')[i];j+=line.startsWith('$')?2:line.length;d.textContent=line.slice(0,j);if(j>=line.length){i++;j=0;setTimeout(step,line.startsWith('$')?380:110)}else setTimeout(step,22)}setTimeout(step,300);" % json.dumps(lines)
     write("terminal", body, css, script)
-    record("terminal", 11)
+    record("terminal", 14)
 
 
 # ---- code -------------------------------------------------------------------
@@ -172,7 +171,7 @@ def code():
     .why { margin-top:30px; font-size:30px; color:var(--ink-2); opacity:0; animation: in .5s ease-out 3.0s forwards; }
     """
     body = f"""<div class="wrap"><h1>Safety that a prompt cannot promise</h1>
-      <div class="file" style="animation-delay:.3s"><div class="name">brain/phantom_brain/runtime.py · follow()</div>{hl(a)}</div>
+      <div class="file" style="animation-delay:.2s"><div class="name">brain/phantom_brain/runtime.py · follow()</div>{hl(a)}</div>
       <div class="file" style="animation-delay:1.7s"><div class="name">brain/phantom_brain/pilot.py · every control tick</div>{hl(b)}</div>
       <div class="why">The follow code refuses anyone the coordinator did not confirm. The envelope check runs on every tick: battery, ceiling, geofence, link. The pilot's switch sits above all of it.</div>
     </div>"""

@@ -10,6 +10,7 @@ scripts here, so a judge can regenerate it.
 | `overlay_detect.py` | the real `CvDnnYoloDetector` and `ReIdMatcher` run frame by frame on the onboard footage, boxes, scores, fps readout and the ground estimate drawn on top |
 | `decision_panel.py` | the agent's decisions from `trace.jsonl`, typed beside the drone's view at the moment they happened |
 | `html_shots.py` | the architecture, the deploy and dry-run teardown (real output, token and account hidden), the two safety checks read from the source files, the agent's own end-of-mission summary |
+| `extras.py` | the scenario card over the dusk time-lapse of the marker layout, the bridge app in a phone, run 2's follow with the map filling as an inset |
 | `cuts.py` | every clip in the plan, cut from the catalogued footage, plus the composites (phone on the field, the synchronised split screen, the landing log line) |
 | `build_plan.py` | anchors each sentence of the narration in the transcript and maps it to its shot |
 | `make_video.py` | narration in, demo out: transcribe, plan, render with vidkit |

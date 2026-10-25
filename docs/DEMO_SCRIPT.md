@@ -38,17 +38,17 @@ nothing happens until a human says that's them.
 
 | Sentence starts | Picture | Source |
 |---|---|---|
-| So this drone's eleven years old | the aircraft in his hand, close on the camera | DSLR, 25 Oct |
+| So this drone's eleven years old | the aircraft handed to the lens, close on its camera | DSLR, 25 Oct |
 | Today I gave it one photo | the reference print dropped on the field, tape tied on | run 3 reference, animated page |
-| and sent it to find me | handheld pan up into the sun, the drone lifting | DSLR, run 1 takeoff |
-| Picture a search coordinator | the empty infield, graded toward dusk, labelled "Composite scenario" | DSLR |
-| and all she's got | him kneeling by the drone on the ground | DSLR |
+| and sent it to find me | the drone climbing over the trees, stabilised | DSLR, run 2 |
+| Picture a search coordinator | the marker layout as a dusk time-lapse, the scenario card appearing line by line on its words (person, clock), labelled "Composite scenario" | DSLR tripod, 25 Oct |
+| and all she's got | the volunteer walking out to the aircraft on the empty infield, the card's last two lines (photo, drone) | DSLR |
 | She's made up | him walking away across the field | DSLR |
 | It's called Last Seen | the mission page, waiting | page, recorded |
 | Getting here took a few tries | drone POV along a path | flight 01, 25 Sept |
 | On the second it wouldn't | aerial of him on grass | flight 02, 30 Sept |
 | Today it did the whole thing itself | drone POV: controller on the ground, both hands up, walks away | run 1 |
-| Claude decides where to look | drone POV with the trace typed beside it | run 3 trace |
+| Claude decides where to look | drone POV with the trace typed beside it, then the Phantom Bridge app on the phone during run 3's follow | run 3 trace, phone screen |
 | Every frame runs through | the real detector drawn on the real frames, ms and fps readout | run 3 frames |
 | Anyone it spots | crop beside the photo, three bars: re-ID, clothing, match | run 3 frames |
 | Then the camera model | the feet point and the ground estimate, then the map filling | run 3 frames, run 2 pins |
@@ -58,8 +58,8 @@ nothing happens until a human says that's them.
 | And then it does the part | the phone: Is this them?, the two prints, the cursor to That's them | run 3, recorded |
 | That's them | the press, the page turns to Staying with them | same recording |
 | Now it follows me | split screen: DSLR of him walking and the drone's view of the same 15 s | DSLR + run 3 |
-| In one run it stayed | the map with 49 pins, then the agent's own summary typed | run 2 |
-| Your answer goes through AWS | the architecture, piece by piece, then the deploy and dry-run teardown typed | pages |
+| In one run it stayed | run 2's follow from the drone with the map filling with its 49 pins as an inset, then the agent's own summary typed | run 2 |
+| Your answer goes through AWS | the architecture, piece by piece, then a terminal: the deploy, a 200 from the function URL with its x-amzn-requestid, the stack's resources, the dry-run teardown | pages, real output |
 | The safety's in the code | the two checks from runtime.py and pilot.py | code, read from the files |
 | and when the battery got low | drone POV descending, the ABORT line | run 3 |
 | And if anything ever looks wrong | his hand on the mode switch | DSLR |

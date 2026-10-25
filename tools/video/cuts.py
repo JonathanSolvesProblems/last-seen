@@ -106,9 +106,9 @@ def main():
     which = set(sys.argv[1:])
     def want(n): return not which or n in which
     OUT.mkdir(exist_ok=True)
-    if want("01"): cut(DS[13], 37.0, 41.2, "01-drone-hand")
+    if want("01"): cut(DS[13], 38.25, 41.0, "01-drone-hand")
     if want("02"): conv(W_ / "html" / "photo.webm", "02-photo")
-    if want("03"): cut(DS[4], 202.5, 216.0, "03-takeoff-sky")
+    if want("03"): conv(W_ / "stab_d05.mp4", "03-takeoff-sky", 0.8, 4.5)
     if want("04"): cut(DS[12], 0.0, 14.0, "04-empty-field", FIT + "," + DUSK)
     if want("05"): cut(DS[4], 432.0, 444.0, "05-volunteer")
     if want("06"): cut(DS[13], 2.0, 11.8, "06-walk-away")
