@@ -1,0 +1,48 @@
+# python
+brain/.venv/
+__pycache__/
+*.pyc
+brain/runs/
+# the 25 October missions are the evidence behind the report; keep them
+!brain/runs/
+brain/runs/*
+!brain/runs/last-seen/
+brain/runs/last-seen/*
+!brain/runs/last-seen/20261025-*
+brain/*.egg-info/
+*.pt
+
+# android
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+android/.idea/
+android/*.iml
+android/app/*.iml
+android/.kotlin/
+
+# media / scratch
+*.mp4
+*.mov
+data/private/
+# every run drops a few hundred annotated frames in here
+broll/
+brain/tmp/
+
+# models are downloaded, see README
+brain/models/*.onnx
+
+brain/.pytest_cache/
+
+
+# AWS deploy outputs carry the mission-control token
+infra/outputs.json
+
+# design working files and local scratch, not part of the project
+.design/
+.pytest_cache/
+*.mkv
+*.wav
+brain/configs/wifi.local.json
+demo*.edit-plan.json

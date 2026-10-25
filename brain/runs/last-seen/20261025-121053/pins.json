@@ -1,0 +1,443 @@
+[
+ {
+  "t": 1143666.889,
+  "e": 2.5720280069826895,
+  "n": 8.074821105527015,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143668.007,
+  "e": 2.7638916226829324,
+  "n": 8.07437648605708,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143669.123,
+  "e": 3.625602341383027,
+  "n": 6.001639740331584,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143670.245,
+  "e": 3.419852407620066,
+  "n": 4.267861112071195,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143671.36,
+  "e": 1.5268507348680609,
+  "n": 3.9950844801155934,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143672.463,
+  "e": -0.33112416961196944,
+  "n": 4.022961913551679,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143675.086,
+  "e": -4.228053123357658,
+  "n": 3.1178607672758014,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143677.143,
+  "e": -7.346629444759018,
+  "n": 0.7660351332148052,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143681.561,
+  "e": -6.421002076275676,
+  "n": -4.611309752354634,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143682.652,
+  "e": -7.363080644570375,
+  "n": -3.4130958992710525,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143683.768,
+  "e": -6.824815156840493,
+  "n": -0.0338113425371529,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143684.874,
+  "e": -5.11147298324773,
+  "n": 1.0322153970207328,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143686.119,
+  "e": -6.1851066606759195,
+  "n": 2.088830844216755,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143687.23,
+  "e": -8.80083049194507,
+  "n": 2.704245602780121,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143688.323,
+  "e": -10.523539468581847,
+  "n": 1.5564002125984737,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143689.435,
+  "e": -10.923228989408631,
+  "n": 0.11899328521145747,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143690.531,
+  "e": -12.684950942199851,
+  "n": 1.0936082373695482,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143691.635,
+  "e": -15.728176058609467,
+  "n": 2.2239230695304513,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143692.856,
+  "e": -19.601807205491973,
+  "n": 1.9100831620168064,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143693.986,
+  "e": -22.480805723048036,
+  "n": -0.4676421991577354,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143695.138,
+  "e": -25.042657006111515,
+  "n": -3.201342397871355,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143696.284,
+  "e": -27.6741854951535,
+  "n": -5.210379883130624,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143697.58,
+  "e": -28.43929605924349,
+  "n": -3.7163467076470433,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143698.716,
+  "e": -30.93988286821768,
+  "n": 2.8874408219565764,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143699.815,
+  "e": -29.36528686611063,
+  "n": 11.615676589653,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143700.918,
+  "e": -28.77456096732641,
+  "n": 14.313715101541693,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143702.031,
+  "e": -28.586014476800294,
+  "n": 14.72784219516484,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143703.135,
+  "e": -26.740401195792522,
+  "n": 18.491056917006393,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143704.38,
+  "e": -21.491993663319555,
+  "n": 21.138610553791658,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143705.495,
+  "e": -17.35510885491738,
+  "n": 24.014672963589398,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143706.595,
+  "e": -15.480542941344863,
+  "n": 25.813986283744995,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143707.85,
+  "e": -12.465716028628083,
+  "n": 26.745871649642,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143708.946,
+  "e": -8.368833157442817,
+  "n": 26.3941139537335,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143710.058,
+  "e": -5.192289291972056,
+  "n": 22.877874247277454,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143711.163,
+  "e": -1.6448388379980337,
+  "n": 19.242932831504334,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143712.278,
+  "e": 1.8397632182512496,
+  "n": 14.97260521807108,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143713.39,
+  "e": 4.319608062818677,
+  "n": 12.091341702508839,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143714.77,
+  "e": 6.676453268737571,
+  "n": 8.442027687798788,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143716.723,
+  "e": 4.712577278984508,
+  "n": 0.8507915059656312,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143719.641,
+  "e": -0.5128675960947824,
+  "n": -3.255534916501805,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143747.565,
+  "e": -10.615678154140081,
+  "n": 5.334101120216117,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143748.671,
+  "e": -11.75308444683082,
+  "n": 4.823834233700176,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143749.782,
+  "e": -11.804141518111408,
+  "n": 1.9531460082180487,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143750.874,
+  "e": -8.672976956158756,
+  "n": 0.43923846694143265,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143751.98,
+  "e": -5.899569576731636,
+  "n": 0.7185643180651695,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143753.076,
+  "e": -4.1254470195140645,
+  "n": 1.069985454336308,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143754.749,
+  "e": -1.5564219387642009,
+  "n": 2.4029446817626656,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143755.845,
+  "e": -0.3088868513370482,
+  "n": 0.7182576679230905,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ },
+ {
+  "t": 1143756.946,
+  "e": -2.3302309850713776,
+  "n": -2.6379190950535136,
+  "phone_e": null,
+  "phone_n": null,
+  "phone_accuracy_m": null,
+  "error_m": null
+ }
+]

@@ -1,0 +1,44 @@
+{
+  "when": "2026-10-25 12:10:40",
+  "name": "last-seen",
+  "aborted": null,
+  "frames_saved": 0,
+  "envelope": {
+    "max_alt": 15.0,
+    "max_radius": 23.0,
+    "min_battery": 25,
+    "min_sats": 7,
+    "stale_s": 2.0,
+    "max_speed": 2.0,
+    "max_climb": 0.5,
+    "max_yaw_rate": 30.0
+  },
+  "steps": [
+    {
+      "name": "preflight",
+      "detail": "clear",
+      "ok": true,
+      "data": {
+        "sats": 11,
+        "battery": 68,
+        "switch": "F",
+        "home_set": true,
+        "mode": "F-GPS"
+      }
+    },
+    {
+      "name": "takeoff",
+      "detail": "hovering at 2.2 m",
+      "ok": true,
+      "data": {
+        "alt": 2.2
+      }
+    },
+    {
+      "name": "last seen",
+      "detail": "{\"outcome\": \"aborted\", \"summary\": \"recalled by the coordinator\"}",
+      "ok": false,
+      "data": {}
+    }
+  ]
+}

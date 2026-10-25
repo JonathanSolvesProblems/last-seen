@@ -1,0 +1,44 @@
+{
+  "when": "2026-10-25 12:15:10",
+  "name": "last-seen",
+  "aborted": null,
+  "frames_saved": 0,
+  "envelope": {
+    "max_alt": 15.0,
+    "max_radius": 23.0,
+    "min_battery": 25,
+    "min_sats": 7,
+    "stale_s": 2.0,
+    "max_speed": 2.0,
+    "max_climb": 0.5,
+    "max_yaw_rate": 30.0
+  },
+  "steps": [
+    {
+      "name": "preflight",
+      "detail": "clear",
+      "ok": true,
+      "data": {
+        "sats": 12,
+        "battery": 56,
+        "switch": "F",
+        "home_set": true,
+        "mode": "F-GPS"
+      }
+    },
+    {
+      "name": "takeoff",
+      "detail": "hovering at 2.1 m",
+      "ok": true,
+      "data": {
+        "alt": 2.1
+      }
+    },
+    {
+      "name": "last seen",
+      "detail": "{\"outcome\": \"found_and_followed\", \"summary\": \"The coordinator confirmed P1: short dark hair, black leather jacket, grey top, dark trousers. P1 was first seen about 4 m east of takeoff. The drone followed P1 for 90 s and put 49 position pins on the map. Last position: about 2.3 m west and 2.6 m south of takeoff, nearly stationary (0.05 m/s), facing west-north-west (289\\u00b0). The lock was weak: it held only 47% of the time and lost the person 7 times. A second person, P2, with a similar dark jacket (match 0.73, not reviewed) was about 10 m west, so pins may have jumped between the two. The ground team should check the face on arrival. No phone GPS was available to check the pins against.\"}",
+      "ok": true,
+      "data": {}
+    }
+  ]
+}
