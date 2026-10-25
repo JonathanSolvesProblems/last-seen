@@ -170,7 +170,7 @@ def markers():
     d.text((x, 506), "A steady 2 m gap: the lens model, not noise. Report, section 5.4.", font=t, fill=(169, 181, 159))
     bg.save(W_ / "markers_bg.png")
     run(["-ss", 0.3, "-t", 8, "-i", D / "phone-camera" / "20261025_114527.mp4", "-loop", "1", "-i", W_ / "markers_bg.png",
-         "-filter_complex", "[0:v]scale=-2:1080[p];[1:v][p]overlay=1920-24-W:0:shortest=1,format=yuv420p", *ENC, "-r", "30", OUT / "14a-markers.mp4"])
+         "-filter_complex", "[0:v]scale=-2:1080[p];[1:v][p]overlay=1920-24-w:0:shortest=1,format=yuv420p", *ENC, "-r", "30", OUT / "14a-markers.mp4"])
     print("14a-markers")
 
 

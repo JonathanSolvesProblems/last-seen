@@ -23,7 +23,7 @@ BEATS = [
     ("today i gave it one photo",
      [("02-photo", 1, "none", "", 0)]),
     ("and sent it to find me",
-     [("10b-liftoff", 1, "none", "", 4.0)]),
+     [("10b-liftoff", 1, "none", "", 10.5)]),
     ("picture a search coordinator",
      [("04-briefing", 1, "none", "Composite scenario, not a real search", 0)]),
     ("and all she's got",
@@ -143,7 +143,7 @@ def main():
         "add_outro_card": False,
         "theme": {
             "palette": {"bg": "#111A10", "accent": "#FF4D86", "text": "#EEF1E6", "text2": "#A9B59F"},
-            "lower_third": {"font": str(Path(__file__).resolve().parents[2] / "tools/video/fonts/RedHatText[wght].ttf"),
+            "lower_third": {"font": str(Path(__file__).resolve().parents[2] / ".design/brand/fonts/RedHatText[wght].ttf"),
                             "size": 30, "color": "#EEF1E6", "box_color": "0x111A10@0.86", "pad": 14, "x": "56", "y": "h-96"},
             "captions": {"font": "Segoe UI", "size": 54, "spoken": "EEF1E6", "active": "FF4D86", "outline": "111A10", "back": "A0101A11", "outline_w": 4, "shadow": 2, "margin_v": 112, "words_per_line": 6},
         },
