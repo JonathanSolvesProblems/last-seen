@@ -21,7 +21,7 @@ BEATS = [
     ("so this drone's eleven years old",
      [("01-drone-hand", 1, "none", "DJI Phantom 3 Standard, released 2015", 0)]),
     ("today i gave it one photo",
-     [("02-photo", 1, "none", "", 0)]),
+     [("02-photo", 1, "none", "The photo for runs 2 and 3: a frame from run 1", 0)]),
     ("and sent it to find me",
      [("10b-liftoff", 1, "none", "", 10.5)]),
     ("picture a search coordinator",

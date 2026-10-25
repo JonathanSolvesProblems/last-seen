@@ -101,6 +101,14 @@ CLAIMS = [
     ("docs/SUBMISSION.md", r"lock held only (\d+)% of the time", lambda: round(100 * follow2()["locked_fraction"])),
     ("docs/SUBMISSION.md", r"best match (\d\.\d+) from the air", lambda: best_match(RUN1)),
     ("docs/SUBMISSION.md", r"looked closer at (\d\.\d+), asked", lambda: best_match(RUN2)),
+    # the gallery captions
+    ("docs/GALLERY.md", r"first scan at (\d\.\d+) and asked", lambda: best_match(RUN3)),
+    ("docs/GALLERY.md", r"never scored above (\d\.\d+)", lambda: best_match(RUN1)),
+    ("docs/GALLERY.md", r"Run 2: (\d+) s, \d+ pins", lambda: follow2()["followed_s"]),
+    ("docs/GALLERY.md", r"Run 2: \d+ s, (\d+) pins", lambda: follow2()["pins"]),
+    ("docs/GALLERY.md", r"lock held (\d+)%", lambda: round(100 * follow2()["locked_fraction"])),
+    ("docs/GALLERY.md", r"camera (\d+(?:\.\d+)?) m up", lambda: camtruth()["measured_height_median_m"]),
+    ("docs/GALLERY.md", r"barometer said (\d+(?:\.\d+)?) m", lambda: camtruth()["reported_alt_median_m"]),
     # the narration
     ("docs/DEMO_SCRIPT.md", r"scored me at zero point (two four)", lambda: f"{best_match(RUN1):.2f}" == "0.24"),
     ("docs/DEMO_SCRIPT.md", r"first scan, at zero point (eight five)", lambda: f"{best_match(RUN3):.2f}" == "0.85"),
@@ -110,7 +118,7 @@ CLAIMS = [
 ]
 
 PLACEHOLDER = re.compile(r"\[(pending[^\]]*|X|N|-?\d+\]?)\]")
-FINAL_DOCS = ["docs/REPORT.md", "docs/DEMO_SCRIPT.md", "README.md", "docs/SUBMISSION.md"]
+FINAL_DOCS = ["docs/REPORT.md", "docs/DEMO_SCRIPT.md", "README.md", "docs/SUBMISSION.md", "docs/GALLERY.md"]
 
 
 def main() -> int:
